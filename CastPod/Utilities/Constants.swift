@@ -12,3 +12,7 @@ struct SFSymbols {
     static let magnifyingglass = UIImage(systemName: "magnifyingglass")!
     static let download = UIImage(systemName: "arrow.down.circle.fill")!
 }
+
+struct Asset {
+    static let placeholder = #imageLiteral(resourceName: "placeholder")
+}

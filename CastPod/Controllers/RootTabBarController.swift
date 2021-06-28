@@ -22,11 +22,11 @@ class RootTabBarController: UITabBarController {
     
     // MARK: - Helpers
     private func setupTabBarController() {
-        tabBar.tintColor = .purple
+        tabBar.tintColor = .orange
         viewControllers = [
-            generateNavController(ViewController(), "Favorites", SFSymbols.star),
-            generateNavController(ViewController(), "Search", SFSymbols.magnifyingglass),
-            generateNavController(ViewController(), "Downloads", SFSymbols.download)
+            generateNavController(PodcastsSearchController(), "Favorites", SFSymbols.star),
+            generateNavController(PodcastsSearchController(), "Search", SFSymbols.magnifyingglass),
+            generateNavController(PodcastsSearchController(), "Downloads", SFSymbols.download)
         ]
     }
     
