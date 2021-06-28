@@ -14,6 +14,7 @@
 		4C975B7D268A765200ED882D /* CastPodLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B7C268A765200ED882D /* CastPodLabel.swift */; };
 		4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B7E268A76E700ED882D /* CastPodStackView.swift */; };
 		4C975B81268A788100ED882D /* CastPodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B80268A788100ED882D /* CastPodImageView.swift */; };
+		4C975B83268A94D300ED882D /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B82268A94D300ED882D /* UIImageView.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -34,6 +35,7 @@
 		4C975B7C268A765200ED882D /* CastPodLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodLabel.swift; sourceTree = "<group>"; };
 		4C975B7E268A76E700ED882D /* CastPodStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodStackView.swift; sourceTree = "<group>"; };
 		4C975B80268A788100ED882D /* CastPodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodImageView.swift; sourceTree = "<group>"; };
+		4C975B82268A94D300ED882D /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				4CE3279326897BBA0064221C /* UIView.swift */,
 				4C975B77268A62D800ED882D /* UIViewController.swift */,
+				4C975B82268A94D300ED882D /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */,
+				4C975B83268A94D300ED882D /* UIImageView.swift in Sources */,
 				4CE3279426897BBA0064221C /* UIView.swift in Sources */,
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
 				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,

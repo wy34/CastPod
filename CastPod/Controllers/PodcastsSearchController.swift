@@ -9,11 +9,8 @@ import UIKit
 //import Alamofire
 
 class PodcastsSearchController: UITableViewController {
-    // MARK: - Properties    
-    var podcasts = [
-        Podcast(artistName: "Lets Build That App", trackName: "Brian Voong"),
-        Podcast(artistName: "Some Podcast", trackName: "Some Author")
-    ]
+    // MARK: - Properties
+    var podcasts = [Podcast]()
     
     // MARK: - Views
     
@@ -28,6 +25,7 @@ class PodcastsSearchController: UITableViewController {
     private func configureTableView() {
         tableView.rowHeight = 132
         tableView.backgroundColor = .white
+        tableView.tableFooterView = UIView()
         tableView.register(PodcastCell.self, forCellReuseIdentifier: PodcastCell.reuseId)
     }
     
@@ -72,5 +70,10 @@ extension PodcastsSearchController {
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         fetchPodcasts(searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        podcasts.removeAll()
+        tableView.reloadData()
     }
 }

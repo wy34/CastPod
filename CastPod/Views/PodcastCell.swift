@@ -16,15 +16,16 @@ class PodcastCell: UITableViewCell {
             guard let podcast = podcast else { return }
             titleLabel.text = podcast.trackName
             artistLabel.text = podcast.artistName
-            episodeCountLabel.text = "Episode Count"
+            episodeCountLabel.text = "\(podcast.trackCount ?? 0) episodes"
+            podcastImageView.setImage(with: podcast.artworkUrl600, completion: nil)
         }
     }
     
     // MARK: - Views
     private let podcastImageView = CastPodImageView(image: Asset.placeholder, contentMode: .scaleAspectFill)
-    private let titleLabel = CastPodLabel(text: "sdfsdf", font: .systemFont(ofSize: 18, weight: .bold))
-    private let artistLabel = CastPodLabel(text: "sdfasf", font: .systemFont(ofSize: 16, weight: .regular))
-    private let episodeCountLabel = CastPodLabel(text: "asdfasdf", font: .systemFont(ofSize: 14, weight: .light))
+    private let titleLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 18, weight: .bold))
+    private let artistLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 16, weight: .regular))
+    private let episodeCountLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
     private lazy var labelStack = CastPodStackView(views: [titleLabel, artistLabel, episodeCountLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
     
     // MARK: - Init
