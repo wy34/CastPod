@@ -9,9 +9,7 @@ import UIKit
 //import Alamofire
 
 class PodcastsSearchController: UITableViewController {
-    // MARK: - Properties
-    private let reuseId = "PodcastCell"
-    
+    // MARK: - Properties    
     var podcasts = [
         Podcast(artistName: "Lets Build That App", trackName: "Brian Voong"),
         Podcast(artistName: "Some Podcast", trackName: "Some Author")
@@ -28,8 +26,9 @@ class PodcastsSearchController: UITableViewController {
 
     // MARK: - Helpers
     private func configureTableView() {
+        tableView.rowHeight = 132
         tableView.backgroundColor = .white
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
+        tableView.register(PodcastCell.self, forCellReuseIdentifier: PodcastCell.reuseId)
     }
     
     private func setupSearchController() {
@@ -63,11 +62,8 @@ extension PodcastsSearchController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
-        let podcast = podcasts[indexPath.row]
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = "\(podcast.artistName ?? "")\n\(podcast.trackName ?? "")"
-        cell.imageView?.image = Asset.placeholder
+        let cell = tableView.dequeueReusableCell(withIdentifier: PodcastCell.reuseId, for: indexPath) as! PodcastCell
+        cell.podcast = podcasts[indexPath.row]
         return cell
     }
 }

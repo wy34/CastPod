@@ -10,6 +10,10 @@
 		4C975B73268A580900ED882D /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B72268A580900ED882D /* SearchResult.swift */; };
 		4C975B76268A629600ED882D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B75268A629600ED882D /* APIManager.swift */; };
 		4C975B78268A62D800ED882D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B77268A62D800ED882D /* UIViewController.swift */; };
+		4C975B7A268A75F600ED882D /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B79268A75F600ED882D /* PodcastCell.swift */; };
+		4C975B7D268A765200ED882D /* CastPodLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B7C268A765200ED882D /* CastPodLabel.swift */; };
+		4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B7E268A76E700ED882D /* CastPodStackView.swift */; };
+		4C975B81268A788100ED882D /* CastPodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B80268A788100ED882D /* CastPodImageView.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -26,6 +30,10 @@
 		4C975B72268A580900ED882D /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		4C975B75268A629600ED882D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		4C975B77268A62D800ED882D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		4C975B79268A75F600ED882D /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
+		4C975B7C268A765200ED882D /* CastPodLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodLabel.swift; sourceTree = "<group>"; };
+		4C975B7E268A76E700ED882D /* CastPodStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodStackView.swift; sourceTree = "<group>"; };
+		4C975B80268A788100ED882D /* CastPodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodImageView.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +68,16 @@
 				4C975B75268A629600ED882D /* APIManager.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		4C975B7B268A763C00ED882D /* GenericViews */ = {
+			isa = PBXGroup;
+			children = (
+				4C975B7C268A765200ED882D /* CastPodLabel.swift */,
+				4C975B7E268A76E700ED882D /* CastPodStackView.swift */,
+				4C975B80268A788100ED882D /* CastPodImageView.swift */,
+			);
+			path = GenericViews;
 			sourceTree = "<group>";
 		};
 		4CE3276D268978A50064221C = {
@@ -108,6 +126,8 @@
 		4CE3278E26897AE00064221C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C975B7B268A763C00ED882D /* GenericViews */,
+				4C975B79268A75F600ED882D /* PodcastCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -286,14 +306,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */,
 				4CE3279426897BBA0064221C /* UIView.swift in Sources */,
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
 				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,
 				4C975B76268A629600ED882D /* APIManager.swift in Sources */,
 				4C975B78268A62D800ED882D /* UIViewController.swift in Sources */,
 				4CE3279626897D680064221C /* RootTabBarController.swift in Sources */,
+				4C975B81268A788100ED882D /* CastPodImageView.swift in Sources */,
 				4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */,
+				4C975B7D268A765200ED882D /* CastPodLabel.swift in Sources */,
 				4CE3277A268978A60064221C /* AppDelegate.swift in Sources */,
+				4C975B7A268A75F600ED882D /* PodcastCell.swift in Sources */,
 				4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */,
 				4CE3279926897EBF0064221C /* Constants.swift in Sources */,
 			);
