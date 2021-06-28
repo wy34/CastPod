@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C975B73268A580900ED882D /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B72268A580900ED882D /* SearchResult.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C975B72268A580900ED882D /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		4CE3278D26897AD80064221C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4C975B72268A580900ED882D /* SearchResult.swift */,
 				4CE3279A268984D10064221C /* Podcast.swift */,
 			);
 			path = Models;
@@ -153,7 +156,6 @@
 				9C8F42CB9E363633FE9C7E31 /* Pods-CastPod.debug.xcconfig */,
 				68F6ECD063A6AFEEB37D8F70 /* Pods-CastPod.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -272,6 +274,7 @@
 			files = (
 				4CE3279426897BBA0064221C /* UIView.swift in Sources */,
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
+				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,
 				4CE3279626897D680064221C /* RootTabBarController.swift in Sources */,
 				4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */,
 				4CE3277A268978A60064221C /* AppDelegate.swift in Sources */,
