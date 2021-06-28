@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 
 class PodcastsSearchController: UITableViewController {
     // MARK: - Properties
@@ -40,6 +40,20 @@ class PodcastsSearchController: UITableViewController {
         searchController.searchBar.placeholder = "Search Podcast"
         searchController.searchBar.delegate = self
     }
+    
+    private func fetchPodcasts(_ searchQuery: String) {
+        APIManager.shared.fetchPodcasts(searchQuery: searchQuery) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+                case .success(let podcasts):
+                    self.podcasts = podcasts
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    self.showAlert("Error", error.localizedDescription)
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -61,23 +75,6 @@ extension PodcastsSearchController {
 // MARK: - UISearchBarDelegate
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let urlString = "https://itunes.apple.com/search?term=\(searchText)&media=podcast".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
-        
-        AF.request(urlString).response { response in
-            if let error = response.error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            if let data = response.data {
-                do {
-                    let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
-                    self.podcasts = searchResult.results
-                    self.tableView.reloadData()
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
+        fetchPodcasts(searchText)
     }
 }
