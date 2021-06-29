@@ -16,7 +16,7 @@ struct Episode {
     
     init(feedItem: RSSFeedItem) {
         self.title = feedItem.title
-        self.description = feedItem.description
+        self.description = feedItem.iTunes?.iTunesSummary
         self.pubDate = feedItem.pubDate
         self.imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
     }
