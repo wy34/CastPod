@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import FeedKit
 
 class APIManager {
     // MARK: - Properties
@@ -59,6 +60,24 @@ class APIManager {
                     }
                 }
             }.resume()
+        }
+    }
+    
+    func parsePodcastFeed(urlString: String?, completion: @escaping (Result<[Episode]?, Error>) -> Void) {
+        guard let urlString = urlString else { return }
+        guard let feedURL = URL(string: urlString) else { return }
+        
+        let parser = FeedParser(URL: feedURL)
+        
+        parser.parseAsync { result in
+            switch result {
+                case .success(let feed):
+                    let rssFeed = feed.rssFeed
+                    let episodes = rssFeed?.items?.map({ Episode(title: $0.title ?? "") })
+                    completion(.success(episodes))
+                case .failure(let error):
+                    completion(.failure(error))
+            }
         }
     }
 }

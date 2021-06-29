@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-CastPod/Pods-CastPod-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/FeedKit/FeedKit.framework
