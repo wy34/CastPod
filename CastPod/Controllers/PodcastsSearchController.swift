@@ -33,7 +33,7 @@ class PodcastsSearchController: UITableViewController {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.tintColor = .orange
+        searchController.searchBar.tintColor = Colors.appTintColor
         searchController.searchBar.placeholder = "Search Podcast"
         searchController.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false

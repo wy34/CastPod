@@ -14,6 +14,7 @@ class EpisodeCell: UITableViewCell {
     var episode: Episode? {
         didSet {
             guard let episode = episode else { return }
+            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
             dateLabel.text = episode.pubDate?.stringWith(format: "MMM dd, yyyy")
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description
@@ -21,7 +22,7 @@ class EpisodeCell: UITableViewCell {
     }
     
     // MARK: - Views
-    private let episodeImageView = CastPodImageView(image: Asset.placeholder, contentMode: .scaleAspectFill)
+    private let episodeImageView = CastPodImageView(image: nil, contentMode: .scaleAspectFill)
     private let dateLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .medium))
     private let titleLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 16, weight: .bold))
     private let descriptionLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
@@ -42,7 +43,7 @@ class EpisodeCell: UITableViewCell {
     private func configureUI() {
         episodeImageView.clipsToBounds = true
         episodeImageView.layer.cornerRadius = 15
-        dateLabel.textColor = .orange
+        dateLabel.textColor = Colors.appTintColor
         titleLabel.numberOfLines = 2
         descriptionLabel.numberOfLines = 2
     }

@@ -16,3 +16,7 @@ struct SFSymbols {
 struct Asset {
     static let placeholder = #imageLiteral(resourceName: "placeholder")
 }
+
+struct Colors {
+    static let appTintColor = UIColor.systemBlue
+}

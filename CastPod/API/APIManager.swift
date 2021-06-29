@@ -73,7 +73,15 @@ class APIManager {
             switch result {
                 case .success(let feed):
                     let rssFeed = feed.rssFeed
-                    let episodes = rssFeed?.items?.map({ Episode(feedItem: $0) })
+                    let episodes = rssFeed?.items?.map({ item -> Episode in
+                        var episode = Episode(feedItem: item)
+                        
+                        if episode.imageUrl == nil {
+                            episode.imageUrl = rssFeed?.iTunes?.iTunesImage?.attributes?.href
+                        }
+                        
+                        return episode
+                    })
                     completion(.success(episodes))
                 case .failure(let error):
                     completion(.failure(error))
