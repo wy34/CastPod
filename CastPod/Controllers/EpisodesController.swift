@@ -35,8 +35,9 @@ class EpisodesController: UITableViewController {
     }
     
     private func configureTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(EpisodeCell.self, forCellReuseIdentifier: EpisodeCell.reuseId)
         tableView.tableFooterView = UIView()
+        tableView.rowHeight = 132
     }
     
     private func parseEpisodes(feedUrl: String?) {
@@ -65,8 +66,8 @@ extension EpisodesController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = episodes[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseId, for: indexPath) as! EpisodeCell
+        cell.episode = episodes[indexPath.row]
         return cell
     }
 }

@@ -73,7 +73,7 @@ class APIManager {
             switch result {
                 case .success(let feed):
                     let rssFeed = feed.rssFeed
-                    let episodes = rssFeed?.items?.map({ Episode(title: $0.title ?? "") })
+                    let episodes = rssFeed?.items?.map({ Episode(feedItem: $0) })
                     completion(.success(episodes))
                 case .failure(let error):
                     completion(.failure(error))
