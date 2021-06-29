@@ -15,6 +15,8 @@
 		4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B7E268A76E700ED882D /* CastPodStackView.swift */; };
 		4C975B81268A788100ED882D /* CastPodImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B80268A788100ED882D /* CastPodImageView.swift */; };
 		4C975B83268A94D300ED882D /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B82268A94D300ED882D /* UIImageView.swift */; };
+		4C975B85268AC64200ED882D /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B84268AC64200ED882D /* EpisodesController.swift */; };
+		4C975B87268ACEE800ED882D /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B86268ACEE800ED882D /* Episode.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -36,6 +38,8 @@
 		4C975B7E268A76E700ED882D /* CastPodStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodStackView.swift; sourceTree = "<group>"; };
 		4C975B80268A788100ED882D /* CastPodImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastPodImageView.swift; sourceTree = "<group>"; };
 		4C975B82268A94D300ED882D /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		4C975B84268AC64200ED882D /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
+		4C975B86268ACEE800ED882D /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 			children = (
 				4C975B72268A580900ED882D /* SearchResult.swift */,
 				4CE3279A268984D10064221C /* Podcast.swift */,
+				4C975B86268ACEE800ED882D /* Episode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			children = (
 				4CE3279526897D680064221C /* RootTabBarController.swift */,
 				4CE3277D268978A60064221C /* PodcastsSearchController.swift */,
+				4C975B84268AC64200ED882D /* EpisodesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -312,6 +318,7 @@
 				4C975B7F268A76E700ED882D /* CastPodStackView.swift in Sources */,
 				4C975B83268A94D300ED882D /* UIImageView.swift in Sources */,
 				4CE3279426897BBA0064221C /* UIView.swift in Sources */,
+				4C975B85268AC64200ED882D /* EpisodesController.swift in Sources */,
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
 				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,
 				4C975B76268A629600ED882D /* APIManager.swift in Sources */,
@@ -321,6 +328,7 @@
 				4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */,
 				4C975B7D268A765200ED882D /* CastPodLabel.swift in Sources */,
 				4CE3277A268978A60064221C /* AppDelegate.swift in Sources */,
+				4C975B87268ACEE800ED882D /* Episode.swift in Sources */,
 				4C975B7A268A75F600ED882D /* PodcastCell.swift in Sources */,
 				4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */,
 				4CE3279926897EBF0064221C /* Constants.swift in Sources */,

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import Alamofire
 
 class PodcastsSearchController: UITableViewController {
     // MARK: - Properties
@@ -63,6 +62,22 @@ extension PodcastsSearchController {
         let cell = tableView.dequeueReusableCell(withIdentifier: PodcastCell.reuseId, for: indexPath) as! PodcastCell
         cell.podcast = podcasts[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episodesController = EpisodesController()
+        episodesController.podcast = podcasts[indexPath.row]
+        navigationController?.pushViewController(episodesController, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = CastPodLabel(text: "Please enter a search term", font: .systemFont(ofSize: 16, weight: .bold))
+        label.textAlignment = .center
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return podcasts.count == 0 ? 250 : 0
     }
 }
 

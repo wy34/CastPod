@@ -22,7 +22,7 @@ class PodcastCell: UITableViewCell {
     }
     
     // MARK: - Views
-    private let podcastImageView = CastPodImageView(image: Asset.placeholder, contentMode: .scaleAspectFill)
+    private let podcastImageView = CastPodImageView(image: nil, contentMode: .scaleAspectFill)
     private let titleLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 18, weight: .bold))
     private let artistLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 16, weight: .regular))
     private let episodeCountLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
