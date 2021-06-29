@@ -25,6 +25,7 @@ class PodcastsSearchController: UITableViewController {
         tableView.rowHeight = 132
         tableView.backgroundColor = .white
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
         tableView.register(PodcastCell.self, forCellReuseIdentifier: PodcastCell.reuseId)
     }
     
@@ -35,6 +36,7 @@ class PodcastsSearchController: UITableViewController {
         searchController.searchBar.tintColor = .orange
         searchController.searchBar.placeholder = "Search Podcast"
         searchController.searchBar.delegate = self
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func fetchPodcasts(_ searchQuery: String) {
@@ -71,7 +73,7 @@ extension PodcastsSearchController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label = CastPodLabel(text: "Please enter a search term", font: .systemFont(ofSize: 16, weight: .bold))
+        let label = CastPodLabel(text: "Please enter a search term", font: .systemFont(ofSize: 18, weight: .bold))
         label.textAlignment = .center
         return label
     }
