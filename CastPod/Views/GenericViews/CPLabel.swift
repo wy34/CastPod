@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CastPodLabel: UILabel {
+class CPLabel: UILabel {
     // MARK: - Init
     init(text: String, font: UIFont) {
         super.init(frame: .zero)

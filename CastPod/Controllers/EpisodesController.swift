@@ -8,7 +8,6 @@
 import UIKit
 
 
-#warning("Navbar remains small until scrolled")
 class EpisodesController: UITableViewController {
     // MARK: - Properties
     var podcast: Podcast? {
@@ -36,6 +35,7 @@ class EpisodesController: UITableViewController {
     
     private func configureTableView() {
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: EpisodeCell.reuseId)
+        tableView.backgroundColor = Colors.darkModeBackground
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 132
     }
@@ -69,5 +69,14 @@ extension EpisodesController {
         let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseId, for: indexPath) as! EpisodeCell
         cell.episode = episodes[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let keyWindow = UIApplication.shared.keyWindow
+        let playerDetailView = PlayerDetailView()
+        playerDetailView.episode = episodes[indexPath.row]
+        playerDetailView.frame = keyWindow.frame
+        keyWindow.addSubview(playerDetailView)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

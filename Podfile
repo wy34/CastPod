@@ -8,4 +8,5 @@ target 'CastPod' do
   # Pods for CastPod
 	pod 'Alamofire', '~> 5.4'
 	pod 'FeedKit', '~> 9.0'
+	pod 'MarqueeLabel'
 end

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CastPodImageView: UIImageView {
+class CPImageView: UIImageView {
     // MARK: - Init
     init(image: UIImage?, contentMode: UIImageView.ContentMode) {
         super.init(frame: .zero)

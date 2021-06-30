@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CastPodStackView: UIStackView {
+class CPStackView: UIStackView {
     // MARK: - Init
     init(views: [UIView], axis: NSLayoutConstraint.Axis = .horizontal, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill, alignment: UIStackView.Alignment = .center) {
         super.init(frame: .zero)

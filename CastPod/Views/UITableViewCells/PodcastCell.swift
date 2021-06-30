@@ -22,11 +22,11 @@ class PodcastCell: UITableViewCell {
     }
     
     // MARK: - Views
-    private let podcastImageView = CastPodImageView(image: nil, contentMode: .scaleAspectFill)
-    private let titleLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 18, weight: .bold))
-    private let artistLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 16, weight: .regular))
-    private let episodeCountLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
-    private lazy var labelStack = CastPodStackView(views: [titleLabel, artistLabel, episodeCountLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
+    private let podcastImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
+    private let titleLabel = CPLabel(text: "", font: .systemFont(ofSize: 18, weight: .bold))
+    private let artistLabel = CPLabel(text: "", font: .systemFont(ofSize: 16, weight: .regular))
+    private let episodeCountLabel = CPLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
+    private lazy var labelStack = CPStackView(views: [titleLabel, artistLabel, episodeCountLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,6 +41,7 @@ class PodcastCell: UITableViewCell {
     
     // MARK: - Helpers
     private func configureUI() {
+        backgroundColor = Colors.darkModeBackground
         podcastImageView.clipsToBounds = true
         podcastImageView.layer.cornerRadius = 15
         titleLabel.numberOfLines = 2

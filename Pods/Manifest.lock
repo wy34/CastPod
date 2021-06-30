@@ -1,20 +1,24 @@
 PODS:
   - Alamofire (5.4.3)
   - FeedKit (9.1.2)
+  - MarqueeLabel (4.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4)
   - FeedKit (~> 9.0)
+  - MarqueeLabel
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - FeedKit
+    - MarqueeLabel
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   FeedKit: 71653273ab08e618cd6fd1301ca08fc02dca6a9e
+  MarqueeLabel: 47ee0c9b3f8da874bb376aef59e8f31c40feaeda
 
-PODFILE CHECKSUM: a24277b96fbe1779c9bcac3663155c6164ac5107
+PODFILE CHECKSUM: c989c420562b29344c14cdc2b8b6e6c41b52fe51
 
 COCOAPODS: 1.10.1

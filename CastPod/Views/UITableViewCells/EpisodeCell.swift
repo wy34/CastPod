@@ -17,16 +17,16 @@ class EpisodeCell: UITableViewCell {
             episodeImageView.setImage(with: episode.imageUrl, completion: nil)
             dateLabel.text = episode.pubDate?.stringWith(format: "MMM dd, yyyy")
             titleLabel.text = episode.title
-            descriptionLabel.text = episode.description
+            descriptionLabel.text = episode.description?.removeHTML()?.removeNewLines()?.removeBackSlashes()
         }
     }
     
     // MARK: - Views
-    private let episodeImageView = CastPodImageView(image: nil, contentMode: .scaleAspectFill)
-    private let dateLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .medium))
-    private let titleLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 16, weight: .bold))
-    private let descriptionLabel = CastPodLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
-    private lazy var labelStack = CastPodStackView(views: [dateLabel, titleLabel, descriptionLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
+    private let episodeImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
+    private let dateLabel = CPLabel(text: "", font: .systemFont(ofSize: 14, weight: .medium))
+    private let titleLabel = CPLabel(text: "", font: .systemFont(ofSize: 16, weight: .bold))
+    private let descriptionLabel = CPLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
+    private lazy var labelStack = CPStackView(views: [dateLabel, titleLabel, descriptionLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,6 +41,7 @@ class EpisodeCell: UITableViewCell {
     
     // MARK: - Helpers
     private func configureUI() {
+        backgroundColor = Colors.darkModeBackground
         episodeImageView.clipsToBounds = true
         episodeImageView.layer.cornerRadius = 15
         dateLabel.textColor = Colors.appTintColor
@@ -57,3 +58,4 @@ class EpisodeCell: UITableViewCell {
         labelStack.anchor(trailing: trailingAnchor, leading: episodeImageView.trailingAnchor, paddingTrailing: 16, paddingLeading: 16)
     }
 }
+
