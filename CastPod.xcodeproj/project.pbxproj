@@ -18,6 +18,7 @@
 		4C07454C268C268F000EFA3B /* PlayerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07454B268C268F000EFA3B /* PlayerDetailView.swift */; };
 		4C07454E268C272B000EFA3B /* ExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07454D268C272B000EFA3B /* ExpandableCell.swift */; };
 		4C074550268C2D5D000EFA3B /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07454F268C2D5D000EFA3B /* ExpandableSection.swift */; };
+		4C334BBC268CD1EF00D85768 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBB268CD1EF00D85768 /* Notification.Name.swift */; };
 		4C975B73268A580900ED882D /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B72268A580900ED882D /* SearchResult.swift */; };
 		4C975B76268A629600ED882D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B75268A629600ED882D /* APIManager.swift */; };
 		4C975B78268A62D800ED882D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B77268A62D800ED882D /* UIViewController.swift */; };
@@ -52,6 +53,7 @@
 		4C07454B268C268F000EFA3B /* PlayerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailView.swift; sourceTree = "<group>"; };
 		4C07454D268C272B000EFA3B /* ExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableCell.swift; sourceTree = "<group>"; };
 		4C07454F268C2D5D000EFA3B /* ExpandableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableSection.swift; sourceTree = "<group>"; };
+		4C334BBB268CD1EF00D85768 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		4C975B72268A580900ED882D /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		4C975B75268A629600ED882D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		4C975B77268A62D800ED882D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				4C074537268B7B9C000EFA3B /* Date.swift */,
 				4C074539268BA455000EFA3B /* String.swift */,
 				4C07453D268BA7B4000EFA3B /* UIApplication.swift */,
+				4C334BBB268CD1EF00D85768 /* Notification.Name.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				4C975B87268ACEE800ED882D /* Episode.swift in Sources */,
 				4C07454C268C268F000EFA3B /* PlayerDetailView.swift in Sources */,
 				4C07453E268BA7B4000EFA3B /* UIApplication.swift in Sources */,
+				4C334BBC268CD1EF00D85768 /* Notification.Name.swift in Sources */,
 				4C975B7A268A75F600ED882D /* PodcastCell.swift in Sources */,
 				4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */,
 				4C074538268B7B9C000EFA3B /* Date.swift in Sources */,

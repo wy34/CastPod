@@ -85,12 +85,12 @@ class PlayerView: UIView {
     }
 
     private func setupActions() {
-        dismissButton.addTarget(self, action: #selector(dismissPlayer), for: .touchUpInside)
+        dismissButton.addTarget(self, action: #selector(sendPlayerDismissalNotification), for: .touchUpInside)
     }
 
     // MARK: - Selector
-    @objc func dismissPlayer() {
-        self.removeFromSuperview()
+    @objc func sendPlayerDismissalNotification() {
+        NotificationCenter.default.post(name: .shouldDismissPlayerDetailView, object: nil)
     }
 }
 

@@ -11,7 +11,7 @@ class PlayerDetailView: UIView {
     // MARK: - Properties
     var episode: Episode?
     let reuseId = "cell"
-    var descriptionSection = ExpandableSection(title: "Description", cellTitles: ["1"])
+    var descriptionSection = ExpandableSection(title: "Description", cellTitles: [""])
     
     // MARK: - Views
     private lazy var tableView: UITableView = {
@@ -19,7 +19,7 @@ class PlayerDetailView: UIView {
         tv.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
         tv.register(ExpandableCell.self, forCellReuseIdentifier: ExpandableCell.reuseId)
         tv.backgroundColor = Colors.darkModeBackground
-//        tv.allowsSelection = false
+        tv.allowsSelection = false
         tv.delegate = self
         tv.dataSource = self
         return tv
@@ -30,6 +30,7 @@ class PlayerDetailView: UIView {
         super.init(frame: frame)
         configureUI()
         layoutUI()
+        setupNotificationObservers()
     }
 
     required init?(coder: NSCoder) {
@@ -44,6 +45,21 @@ class PlayerDetailView: UIView {
     private func layoutUI() {
         addSubview(tableView)
         tableView.anchor(top: topAnchor, trailing: trailingAnchor, bottom: bottomAnchor, leading: leadingAnchor)
+    }
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissView), name: .shouldDismissPlayerDetailView, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showHideDescription), name: .shouldShowHideEpisodeDescription, object: nil)
+    }
+    
+    // MARK: - Selectors
+    @objc func dismissView() {
+        self.removeFromSuperview()
+    }
+    
+    @objc func showHideDescription() {
+        descriptionSection.isOpen.toggle()
+        tableView.reloadSections([0], with: .none)
     }
 }
 
@@ -69,21 +85,16 @@ extension PlayerDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            return tableView.dequeueReusableCell(withIdentifier: ExpandableCell.reuseId, for: indexPath) as! ExpandableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ExpandableCell.reuseId, for: indexPath) as! ExpandableCell
+            cell.expandableSection = descriptionSection
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
             cell.textLabel?.numberOfLines = 0
             cell.backgroundColor = .tertiarySystemBackground
             cell.textLabel?.font = .systemFont(ofSize: 16)
-            cell.textLabel?.text = episode?.description ?? ""
+            cell.textLabel?.text = episode?.description?.removeHTML()?.removeNewLines()?.removeBackSlashes() ?? ""
             return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            descriptionSection.isOpen.toggle()
-            tableView.reloadSections([indexPath.section], with: .none)
         }
     }
 }
