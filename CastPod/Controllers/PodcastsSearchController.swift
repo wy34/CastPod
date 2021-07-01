@@ -37,6 +37,8 @@ class PodcastsSearchController: UITableViewController {
         searchController.searchBar.placeholder = "Search Podcast"
         searchController.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        searchBar(searchController.searchBar, textDidChange: "Voong")
     }
     
     private func fetchPodcasts(_ searchQuery: String) {

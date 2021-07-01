@@ -58,6 +58,7 @@ class PlayerView: UIView {
         configureUI()
         layoutUI()
         setupActions()
+        scaleUpImageViewWhenAudioStarts()
     }
 
     required init?(coder: NSCoder) {
@@ -69,6 +70,7 @@ class PlayerView: UIView {
         backgroundColor = Colors.darkModeBackground
         episodeImageView.clipsToBounds = true
         episodeImageView.layer.cornerRadius = 15
+        episodeImageView.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
         timeSlider.tintColor = Colors.sliderTintColor
         minTimeLabel.textAlignment = .left
         maxTimeLabel.textAlignment = .right
@@ -104,13 +106,27 @@ class PlayerView: UIView {
         updatePlayPauseButtonTo(play: true)
     }
     
-    private func updatePlayPauseButtonTo(play: Bool = false, pause: Bool = false) {
+    private func scaleUpImageViewWhenAudioStarts() {
+        let time = CMTimeMake(value: 1, timescale: 3)
+        let times = [NSValue(time: time)]
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
+            self?.scaleImageView(up: true)
+        }
+    }
+    
+    private func updatePlayPauseButtonTo(play: Bool) {
         if play {
             player.play()
             playButton.setImage(SFSymbols.pauseButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
         } else {
             player.pause()
             playButton.setImage(SFSymbols.playButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
+        }
+    }
+    
+    private func scaleImageView(up: Bool) {
+        UIView.animate(withDuration: 0.25) {
+            self.episodeImageView.transform = up ? .identity : CGAffineTransform(scaleX: 0.85, y: 0.85)
         }
     }
 
@@ -125,11 +141,9 @@ class PlayerView: UIView {
     }
     
     @objc func playPauseAudio() {
-        if player.timeControlStatus == .paused {
-            updatePlayPauseButtonTo(play: true)
-        } else {
-            updatePlayPauseButtonTo(pause: true)
-        }
+        let isPaused = player.timeControlStatus == .paused
+        updatePlayPauseButtonTo(play: isPaused)
+        scaleImageView(up: isPaused)
     }
 }
 
