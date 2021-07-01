@@ -14,7 +14,7 @@ class EpisodeDescriptionLauncher: UIView {
     // MARK: - Views
     private let blackBgView = CPView(bgColor: .black.withAlphaComponent(0.4))
     private let descriptionCardView = CPView(bgColor: .red)
-    private let titleLabel = CPLabel(text: "Description", font: .systemFont(ofSize: 28, weight: .bold))
+    private let titleLabel = CPLabel(text: "Description", font: .systemFont(ofSize: 26, weight: .bold))
 
     private let descriptionTextView: UITextView = {
         let tv = UITextView()
@@ -48,7 +48,7 @@ class EpisodeDescriptionLauncher: UIView {
     private func layoutUI() {
         descriptionCardView.addSubviews(titleLabel, descriptionTextView)
         titleLabel.anchor(top: descriptionCardView.topAnchor, trailing: descriptionCardView.trailingAnchor, leading: descriptionCardView.leadingAnchor, paddingTrailing: 16, paddingLeading: 16)
-        titleLabel.setDimension(height: descriptionCardView.widthAnchor, hMult: 0.18)
+        titleLabel.setDimension(height: descriptionCardView.widthAnchor, hMult: 0.15)
         descriptionTextView.anchor(top: titleLabel.bottomAnchor, trailing: descriptionCardView.trailingAnchor, bottom: descriptionCardView.bottomAnchor, leading: descriptionCardView.leadingAnchor)
     }
     

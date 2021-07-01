@@ -58,7 +58,7 @@ class PlayerView: UIView {
         configureUI()
         layoutUI()
         setupActions()
-        scaleUpImageViewWhenAudioStarts()
+        setupEpisodePlaybackDetails()
     }
 
     required init?(coder: NSCoder) {
@@ -106,11 +106,21 @@ class PlayerView: UIView {
         updatePlayPauseButtonTo(play: true)
     }
     
-    private func scaleUpImageViewWhenAudioStarts() {
-        let time = CMTimeMake(value: 1, timescale: 3)
+    private func setupEpisodePlaybackDetails() {
+        let time = CMTime(value: 1, timescale: 3)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             self?.scaleImageView(up: true)
+            self?.maxTimeLabel.text = self?.player.currentItem?.duration.toFormattedString()
+            self?.setupEpisodeTimeStack()
+        }
+    }
+    
+    private func setupEpisodeTimeStack() {
+        let time = CMTime(value: 1, timescale: 2)
+        player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] time in
+            self?.minTimeLabel.text = time.toFormattedString()
+            self?.updateTimeSlider()
         }
     }
     
@@ -125,9 +135,16 @@ class PlayerView: UIView {
     }
     
     private func scaleImageView(up: Bool) {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: [.curveEaseIn]) {
             self.episodeImageView.transform = up ? .identity : CGAffineTransform(scaleX: 0.85, y: 0.85)
         }
+    }
+    
+    private func updateTimeSlider() {
+        let currentElapsedTimeSeconds = CMTimeGetSeconds(player.currentTime())
+        let totalEpisodeSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
+        let sliderValue = currentElapsedTimeSeconds / totalEpisodeSeconds
+        timeSlider.value = Float(sliderValue)
     }
 
     // MARK: - Selector
@@ -145,6 +162,7 @@ class PlayerView: UIView {
         updatePlayPauseButtonTo(play: isPaused)
         scaleImageView(up: isPaused)
     }
+
 }
 
 
