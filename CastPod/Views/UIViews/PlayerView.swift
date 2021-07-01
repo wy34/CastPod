@@ -52,14 +52,15 @@ class PlayerView: UIView {
 
     private lazy var overallStack = CPStackView(views: [episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
     
-    private let descriptionViewLauncher = EpisodeDescriptionLauncher()
+    private let blackBgView = CPView(bgColor: .black.withAlphaComponent(0.4))
+    private let episodeDescriptionCardView = EpisodeDescriptionCardView()
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
         layoutUI()
-        setupActions()
+        setupActionsAndGestures()
         setupEpisodePlaybackDetails()
     }
 
@@ -81,17 +82,18 @@ class PlayerView: UIView {
         artistLabel.textColor = Colors.appTintColor
         artistLabel.textAlignment = .center
         volumeSlider.tintColor = Colors.sliderTintColor
+        blackBgView.alpha = 0
     }
 
     private func layoutUI() {
         addSubviews(topButtonStack, overallStack)
         
-        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor)
-        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.2)
+        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor, paddingTop: 10)
+        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.15)
         topButtonStack.center(to: self, by: .centerX)
         
-        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.65)
-        overallStack.anchor(top: topButtonStack.bottomAnchor, paddingTop: 10)
+        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.7)
+        overallStack.anchor(top: topButtonStack.bottomAnchor)
         overallStack.center(to: self, by: .centerX)
         episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
@@ -99,7 +101,7 @@ class PlayerView: UIView {
         volumeStack.setDimension(height: widthAnchor, hMult: 0.1)
     }
 
-    private func setupActions() {
+    private func setupActionsAndGestures() {
         dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         descriptionButton.addTarget(self, action: #selector(displayDescriptionMenu), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playPauseAudio), for: .touchUpInside)
@@ -107,6 +109,8 @@ class PlayerView: UIView {
         backwardButton.addTarget(self, action: #selector(rewind15), for: .touchUpInside)
         forwardButton.addTarget(self, action: #selector(forward15), for: .touchUpInside)
         volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
+        blackBgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissDescriptionMenu)))
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
     }
     
     private func playAudioAt(urlString: String?) {
@@ -166,12 +170,38 @@ class PlayerView: UIView {
 
     // MARK: - Selector
     @objc func dismissView() {
-        removeFromSuperview()
+        UIApplication.shared.rootViewController?.minimizePlayerView()
+    }
+    
+    @objc func maximizePlayerView() {
+        UIApplication.shared.rootViewController?.maximizePlayerView(episode: nil)
     }
     
     @objc func displayDescriptionMenu() {
-        guard let episode = episode, let description = episode.description else { return }
-        descriptionViewLauncher.showDescriptionLauncherWith(description: description)
+        let keyWindow = UIApplication.shared.keyWindow
+
+        blackBgView.frame = .init(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
+        episodeDescriptionCardView.frame = .init(x: 0, y: keyWindow.frame.height, width: keyWindow.frame.width, height: keyWindow.frame.height / 2)
+        episodeDescriptionCardView.episodeDescription = episode?.description
+        
+        keyWindow.addSubviews(blackBgView, episodeDescriptionCardView)
+
+        UIView.animate(withDuration: 0.5) {
+            self.blackBgView.alpha = 1
+            self.episodeDescriptionCardView.frame.origin.y = keyWindow.frame.height / 2
+        }
+    }
+    
+    @objc func dismissDescriptionMenu() {
+        let keyWindow = UIApplication.shared.keyWindow
+
+        UIView.animate(withDuration: 0.5) {
+            self.blackBgView.alpha = 0
+            self.episodeDescriptionCardView.frame.origin.y = keyWindow.frame.height
+        } completion: { _ in
+            self.blackBgView.removeFromSuperview()
+            self.episodeDescriptionCardView.removeFromSuperview()
+        }
     }
     
     @objc func playPauseAudio() {

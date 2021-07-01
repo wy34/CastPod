@@ -20,9 +20,6 @@ class RootTabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarController()
         layoutView()
-        playerView.backgroundColor = .red
-        
-        perform(#selector(maximizePlayerView), with: nil, afterDelay: 1)
     }
     
     // MARK: - Helpers
@@ -46,32 +43,34 @@ class RootTabBarController: UITabBarController {
     private func layoutView() {
         view.insertSubview(playerView, belowSubview: tabBar)
         
+        minimizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
         maximizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         maximizedTopAnchorConstraint?.isActive = true
-        
-        minimizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
-//        minimizedTopAnchorConstraint?.isActive = true
         
         playerView.anchor(trailing: view.trailingAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor)
     }
     
-    // MARK: - Selectors
-    @objc func minimizePlayerView() {
+    func minimizePlayerView() {
         maximizedTopAnchorConstraint?.isActive = false
         minimizedTopAnchorConstraint?.isActive = true
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
             self.view.layoutIfNeeded()
         }
+        
+        self.tabBar.frame.origin.y = 0
     }
     
-    @objc func maximizePlayerView() {
+    func maximizePlayerView(episode: Episode?) {
         maximizedTopAnchorConstraint?.constant = 0
         maximizedTopAnchorConstraint?.isActive = true
         minimizedTopAnchorConstraint?.isActive = false
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
             self.view.layoutIfNeeded()
         }
+        
+        self.tabBar.frame.origin.y = self.view.frame.height
+        playerView.episode = episode
     }
 }

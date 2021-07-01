@@ -16,8 +16,8 @@
 		4C074546268BA992000EFA3B /* CPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C074545268BA992000EFA3B /* CPButton.swift */; };
 		4C074548268BAE72000EFA3B /* CPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C074547268BAE72000EFA3B /* CPSlider.swift */; };
 		4C334BBC268CD1EF00D85768 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBB268CD1EF00D85768 /* Notification.Name.swift */; };
-		4C334BBE268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBD268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift */; };
 		4C334BC0268D6B8A00D85768 /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBF268D6B8A00D85768 /* CMTime.swift */; };
+		4C801012268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C801011268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift */; };
 		4C975B73268A580900ED882D /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B72268A580900ED882D /* SearchResult.swift */; };
 		4C975B76268A629600ED882D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B75268A629600ED882D /* APIManager.swift */; };
 		4C975B78268A62D800ED882D /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B77268A62D800ED882D /* UIViewController.swift */; };
@@ -50,8 +50,8 @@
 		4C074545268BA992000EFA3B /* CPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPButton.swift; sourceTree = "<group>"; };
 		4C074547268BAE72000EFA3B /* CPSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPSlider.swift; sourceTree = "<group>"; };
 		4C334BBB268CD1EF00D85768 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
-		4C334BBD268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDescriptionLauncher.swift; sourceTree = "<group>"; };
 		4C334BBF268D6B8A00D85768 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
+		4C801011268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDescriptionCardView.swift; sourceTree = "<group>"; };
 		4C975B72268A580900ED882D /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		4C975B75268A629600ED882D /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		4C975B77268A62D800ED882D /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				4C074543268BA8AD000EFA3B /* PlayerView.swift */,
-				4C334BBD268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift */,
+				4C801011268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -379,11 +379,11 @@
 				4C975B81268A788100ED882D /* CPImageView.swift in Sources */,
 				4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */,
 				4C975B7D268A765200ED882D /* CPLabel.swift in Sources */,
+				4C801012268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift in Sources */,
 				4C074540268BA83B000EFA3B /* CPView.swift in Sources */,
 				4CE3277A268978A60064221C /* AppDelegate.swift in Sources */,
 				4C975B87268ACEE800ED882D /* Episode.swift in Sources */,
 				4C07453E268BA7B4000EFA3B /* UIApplication.swift in Sources */,
-				4C334BBE268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift in Sources */,
 				4C334BBC268CD1EF00D85768 /* Notification.Name.swift in Sources */,
 				4C975B7A268A75F600ED882D /* PodcastCell.swift in Sources */,
 				4C334BC0268D6B8A00D85768 /* CMTime.swift in Sources */,

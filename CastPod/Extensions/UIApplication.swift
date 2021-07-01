@@ -11,4 +11,8 @@ extension UIApplication {
     var keyWindow: UIWindow {
         return self.windows.filter({ $0.isKeyWindow }).first ?? UIWindow(frame: .zero)
     }
+    
+    var rootViewController: RootTabBarController? {
+        return keyWindow.rootViewController as? RootTabBarController
+    }
 }
