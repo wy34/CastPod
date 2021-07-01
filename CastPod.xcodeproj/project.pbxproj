@@ -15,7 +15,6 @@
 		4C074544268BA8AD000EFA3B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C074543268BA8AD000EFA3B /* PlayerView.swift */; };
 		4C074546268BA992000EFA3B /* CPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C074545268BA992000EFA3B /* CPButton.swift */; };
 		4C074548268BAE72000EFA3B /* CPSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C074547268BAE72000EFA3B /* CPSlider.swift */; };
-		4C074550268C2D5D000EFA3B /* ExpandableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C07454F268C2D5D000EFA3B /* ExpandableSection.swift */; };
 		4C334BBC268CD1EF00D85768 /* Notification.Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBB268CD1EF00D85768 /* Notification.Name.swift */; };
 		4C334BBE268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBD268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift */; };
 		4C334BC0268D6B8A00D85768 /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C334BBF268D6B8A00D85768 /* CMTime.swift */; };
@@ -50,7 +49,6 @@
 		4C074543268BA8AD000EFA3B /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		4C074545268BA992000EFA3B /* CPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPButton.swift; sourceTree = "<group>"; };
 		4C074547268BAE72000EFA3B /* CPSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPSlider.swift; sourceTree = "<group>"; };
-		4C07454F268C2D5D000EFA3B /* ExpandableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableSection.swift; sourceTree = "<group>"; };
 		4C334BBB268CD1EF00D85768 /* Notification.Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.Name.swift; sourceTree = "<group>"; };
 		4C334BBD268D0FBC00D85768 /* EpisodeDescriptionLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDescriptionLauncher.swift; sourceTree = "<group>"; };
 		4C334BBF268D6B8A00D85768 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				4C975B72268A580900ED882D /* SearchResult.swift */,
 				4CE3279A268984D10064221C /* Podcast.swift */,
 				4C975B86268ACEE800ED882D /* Episode.swift */,
-				4C07454F268C2D5D000EFA3B /* ExpandableSection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -375,7 +372,6 @@
 				4CE3279426897BBA0064221C /* UIView.swift in Sources */,
 				4C975B85268AC64200ED882D /* EpisodesController.swift in Sources */,
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
-				4C074550268C2D5D000EFA3B /* ExpandableSection.swift in Sources */,
 				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,
 				4C975B76268A629600ED882D /* APIManager.swift in Sources */,
 				4C975B78268A62D800ED882D /* UIViewController.swift in Sources */,

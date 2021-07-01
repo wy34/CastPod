@@ -26,11 +26,13 @@ class PlayerView: UIView {
     // MARK: - Views
     private let dismissButton = CPButton(image: SFSymbols.xmark, font: .systemFont(ofSize: 16, weight: .bold), tintColor: Colors.darkModeSymbol)
     private let descriptionButton = CPButton(image: SFSymbols.information, font: .systemFont(ofSize: 18, weight: .bold), tintColor: Colors.darkModeSymbol)
+    private lazy var topButtonStack = CPStackView(views: [dismissButton, UIView(), descriptionButton], distribution: .fill)
+    
     private let episodeImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
 
     private let timeSlider = CPSlider(minValue: 0, maxValue: 1, image: SFSymbols.circle)
-    private let minTimeLabel = CPLabel(text: "00:00:00", font: .systemFont(ofSize: 14, weight: .regular))
-    private let maxTimeLabel = CPLabel(text: "00:00:00", font: .systemFont(ofSize: 14, weight: .regular))
+    private let minTimeLabel = CPLabel(text: "--:--:--", font: .systemFont(ofSize: 14, weight: .regular))
+    private let maxTimeLabel = CPLabel(text: "--:--:--", font: .systemFont(ofSize: 14, weight: .regular))
     private lazy var timeLabelStack = CPStackView(views: [minTimeLabel, maxTimeLabel], distribution: .fillEqually, alignment: .center)
     private lazy var timeStack = CPStackView(views: [timeSlider, timeLabelStack], axis: .vertical, distribution: .fillEqually, alignment: .fill)
 
@@ -48,7 +50,7 @@ class PlayerView: UIView {
     private let maxVolImageView = CPButton(image: SFSymbols.volumeUp, font: .systemFont(ofSize: 10, weight: .bold), tintColor: Colors.darkModeSymbol)
     private lazy var volumeStack = CPStackView(views: [minVolImageView, volumeSlider, maxVolImageView], spacing: 10, distribution: .fill, alignment: .fill)
 
-    private lazy var overallStack = CPStackView(views: [UIStackView(arrangedSubviews: [dismissButton, UIView(), descriptionButton]), episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
+    private lazy var overallStack = CPStackView(views: [episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
     
     private let descriptionViewLauncher = EpisodeDescriptionLauncher()
     
@@ -82,11 +84,15 @@ class PlayerView: UIView {
     }
 
     private func layoutUI() {
-        addSubviews(overallStack)
-        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 1.85)
+        addSubviews(topButtonStack, overallStack)
+        
+        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor)
+        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.2)
+        topButtonStack.center(to: self, by: .centerX)
+        
+        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.65)
+        overallStack.anchor(top: topButtonStack.bottomAnchor, paddingTop: 10)
         overallStack.center(to: self, by: .centerX)
-        overallStack.center(to: self, by: .centerY)
-        dismissButton.setDimension(height: 30)
         episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
         artistStack.setDimension(height: widthAnchor, hMult: 0.18)

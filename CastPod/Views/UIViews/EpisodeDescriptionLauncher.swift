@@ -42,7 +42,7 @@ class EpisodeDescriptionLauncher: UIView {
     private func configureUI() {
         blackBgView.alpha = 0
         descriptionCardView.layer.cornerRadius = 15
-        descriptionCardView.backgroundColor = .systemGray5
+        descriptionCardView.backgroundColor = .systemGray4
     }
     
     private func layoutUI() {
