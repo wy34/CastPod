@@ -73,10 +73,10 @@ extension EpisodesController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let keyWindow = UIApplication.shared.keyWindow
-        let playerDetailView = PlayerDetailView()
-        playerDetailView.episode = episodes[indexPath.row]
-        playerDetailView.frame = keyWindow.frame
-        keyWindow.addSubview(playerDetailView)
+        let playerView = PlayerView()
+        playerView.episode = episodes[indexPath.row]
+        playerView.frame = keyWindow.frame
+        keyWindow.addSubview(playerView)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

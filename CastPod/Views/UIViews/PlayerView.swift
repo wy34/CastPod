@@ -7,6 +7,7 @@
 
 import UIKit
 import MarqueeLabel
+import AVKit
 
 class PlayerView: UIView {
     // MARK: - Properties
@@ -16,11 +17,15 @@ class PlayerView: UIView {
             episodeImageView.setImage(with: episode.imageUrl, completion: nil)
             titleLabel.text = "\(episode.title ?? "")               "
             artistLabel.text = episode.artist
+            playAudioAt(urlString: episode.streamUrl)
         }
     }
+    
+    let player = AVPlayer()
 
     // MARK: - Views
-    private let dismissButton = CPButton(title: "Dismiss", bgColor: .clear, font: .systemFont(ofSize: 16, weight: .medium))
+    private let dismissButton = CPButton(image: SFSymbols.xmark, font: .systemFont(ofSize: 16, weight: .bold), tintColor: Colors.darkModeSymbol)
+    private let descriptionButton = CPButton(image: SFSymbols.information, font: .systemFont(ofSize: 18, weight: .bold), tintColor: Colors.darkModeSymbol)
     private let episodeImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
 
     private let timeSlider = CPSlider(minValue: 0, maxValue: 1, image: SFSymbols.circle)
@@ -43,7 +48,9 @@ class PlayerView: UIView {
     private let maxVolImageView = CPButton(image: SFSymbols.volumeUp, font: .systemFont(ofSize: 10, weight: .bold), tintColor: Colors.darkModeSymbol)
     private lazy var volumeStack = CPStackView(views: [minVolImageView, volumeSlider, maxVolImageView], spacing: 10, distribution: .fill, alignment: .fill)
 
-    private lazy var overallStack = CPStackView(views: [dismissButton, episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 16, distribution: .fill, alignment: .fill)
+    private lazy var overallStack = CPStackView(views: [UIStackView(arrangedSubviews: [dismissButton, UIView(), descriptionButton]), episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
+    
+    private let descriptionViewLauncher = EpisodeDescriptionLauncher()
     
     // MARK: - Init
     override init(frame: CGRect) {
@@ -74,23 +81,55 @@ class PlayerView: UIView {
 
     private func layoutUI() {
         addSubviews(overallStack)
-        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.8, hMult: 1.85)
+        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 1.85)
         overallStack.center(to: self, by: .centerX)
-        overallStack.center(to: self, by: .centerY, withMultiplierOf: 0.89)
-        dismissButton.setDimension(height: 20)
-        episodeImageView.setDimension(height: widthAnchor, hMult: 0.8)
+        overallStack.center(to: self, by: .centerY)
+        dismissButton.setDimension(height: 30)
+        episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
         artistStack.setDimension(height: widthAnchor, hMult: 0.18)
         volumeStack.setDimension(height: widthAnchor, hMult: 0.1)
     }
 
     private func setupActions() {
-        dismissButton.addTarget(self, action: #selector(sendPlayerDismissalNotification), for: .touchUpInside)
+        dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        descriptionButton.addTarget(self, action: #selector(displayDescriptionMenu), for: .touchUpInside)
+        playButton.addTarget(self, action: #selector(playPauseAudio), for: .touchUpInside)
+    }
+    
+    private func playAudioAt(urlString: String?) {
+        guard let url = URL(string: urlString ?? "") else { return }
+        let newPlayerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: newPlayerItem)
+        updatePlayPauseButtonTo(play: true)
+    }
+    
+    private func updatePlayPauseButtonTo(play: Bool = false, pause: Bool = false) {
+        if play {
+            player.play()
+            playButton.setImage(SFSymbols.pauseButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
+        } else {
+            player.pause()
+            playButton.setImage(SFSymbols.playButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
+        }
     }
 
     // MARK: - Selector
-    @objc func sendPlayerDismissalNotification() {
-        NotificationCenter.default.post(name: .shouldDismissPlayerDetailView, object: nil)
+    @objc func dismissView() {
+        removeFromSuperview()
+    }
+    
+    @objc func displayDescriptionMenu() {
+        guard let episode = episode, let description = episode.description else { return }
+        descriptionViewLauncher.showDescriptionLauncherWith(description: description)
+    }
+    
+    @objc func playPauseAudio() {
+        if player.timeControlStatus == .paused {
+            updatePlayPauseButtonTo(play: true)
+        } else {
+            updatePlayPauseButtonTo(pause: true)
+        }
     }
 }
 

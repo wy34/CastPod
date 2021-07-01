@@ -80,6 +80,10 @@ class APIManager {
                             episode.imageUrl = rssFeed?.iTunes?.iTunesImage?.attributes?.href
                         }
                         
+                        if episode.artist == nil {
+                            episode.artist = rssFeed?.title
+                        }
+                        
                         return episode
                     })
                     completion(.success(episodes))
