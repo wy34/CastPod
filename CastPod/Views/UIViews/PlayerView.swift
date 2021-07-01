@@ -97,6 +97,10 @@ class PlayerView: UIView {
         dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         descriptionButton.addTarget(self, action: #selector(displayDescriptionMenu), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(playPauseAudio), for: .touchUpInside)
+        timeSlider.addTarget(self, action: #selector(scrubEpisodeTime), for: .valueChanged)
+        backwardButton.addTarget(self, action: #selector(rewind15), for: .touchUpInside)
+        forwardButton.addTarget(self, action: #selector(forward15), for: .touchUpInside)
+        volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
     }
     
     private func playAudioAt(urlString: String?) {
@@ -146,6 +150,12 @@ class PlayerView: UIView {
         let sliderValue = currentElapsedTimeSeconds / totalEpisodeSeconds
         timeSlider.value = Float(sliderValue)
     }
+    
+    private func seek(seconds: Float64) {
+        let cmTimeSeconds = CMTimeMakeWithSeconds(seconds, preferredTimescale: 1)
+        let seekTime = player.currentTime() + cmTimeSeconds
+        player.seek(to: seekTime)
+    }
 
     // MARK: - Selector
     @objc func dismissView() {
@@ -163,6 +173,25 @@ class PlayerView: UIView {
         scaleImageView(up: isPaused)
     }
 
+    @objc func scrubEpisodeTime() {
+        let sliderPercentage = timeSlider.value
+        let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
+        let seekTimeSeconds = Float64(sliderPercentage) * durationSeconds
+        let seekTime = CMTimeMakeWithSeconds(seekTimeSeconds, preferredTimescale: 1)
+        player.seek(to: seekTime)
+    }
+    
+    @objc func rewind15() {
+        seek(seconds: -15)
+    }
+    
+    @objc func forward15() {
+        seek(seconds: 15)
+    }
+    
+    @objc func changeVolume() {
+        player.volume = volumeSlider.value
+    }
 }
 
 
