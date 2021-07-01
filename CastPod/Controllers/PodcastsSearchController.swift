@@ -13,6 +13,10 @@ class PodcastsSearchController: UITableViewController {
     var timer: Timer?
     
     // MARK: - Views
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchingLabel = CPLabel(text: "", font: .systemFont(ofSize: 18, weight: .semibold))
+    private let searchingIndicator = UIActivityIndicatorView(style: .large)
+    private lazy var searchingStack = CPStackView(views: [searchingLabel, searchingIndicator], axis: .vertical, spacing: -165, distribution: .fillEqually)
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -31,7 +35,6 @@ class PodcastsSearchController: UITableViewController {
     }
     
     private func setupSearchController() {
-        let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.tintColor = Colors.appTintColor
@@ -44,14 +47,18 @@ class PodcastsSearchController: UITableViewController {
     
     private func fetchPodcasts(_ searchQuery: String) {
         APIManager.shared.fetchPodcasts(searchQuery: searchQuery) { [weak self] result in
-            guard let self = self else { return }
-            
             switch result {
                 case .success(let podcasts):
-                    self.podcasts = podcasts
-                    self.tableView.reloadData()
+                    if podcasts.isEmpty {
+                        self?.searchingLabel.text = "Cannot find podcast"
+                        self?.searchingIndicator.color = .clear
+                    } else {
+                        self?.podcasts = podcasts
+                        self?.tableView.reloadData()
+                        self?.searchingIndicator.stopAnimating()
+                    }
                 case .failure(let error):
-                    self.showAlert("Error", error.localizedDescription)
+                    self?.showAlert("Error", error.localizedDescription)
             }
         }
     }
@@ -82,16 +89,29 @@ extension PodcastsSearchController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return podcasts.count == 0 ? 250 : 0
+        return podcasts.count == 0 && searchController.searchBar.text == "" ? 250 : 0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return searchingStack
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return podcasts.count == 0 && searchController.searchBar.text != "" ? 250 : 0
     }
 }
 
 // MARK: - UISearchBarDelegate
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchingLabel.text = "Currently Searching..."
+        searchingIndicator.startAnimating()
+        searchingIndicator.color = .gray
+        podcasts.removeAll()
+        tableView.reloadData()
+        
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
-            #warning("delay when pressing x on search bar")
             self?.fetchPodcasts(searchText)
         })
     }

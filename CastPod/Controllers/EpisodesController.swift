@@ -21,10 +21,14 @@ class EpisodesController: UITableViewController {
     var episodes = [Episode]()
     
     // MARK: - Views
+    private let loadingLabel = CPLabel(text: "Loading...", font: .systemFont(ofSize: 18, weight: .semibold))
+    private let loadingIndicator = UIActivityIndicatorView(style: .large)
+    private lazy var loadingStack = CPStackView(views: [loadingLabel, loadingIndicator], axis: .vertical, spacing: -165, distribution: .fillEqually)
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingIndicator.startAnimating()
         configureTableView()
     }
     
@@ -50,6 +54,7 @@ class EpisodesController: UITableViewController {
                         if let episodes = episodes {
                             self.episodes = episodes
                             self.tableView.reloadData()
+                            self.loadingIndicator.stopAnimating()
                         }
                     }
                 case .failure(let error):
@@ -78,5 +83,13 @@ extension EpisodesController {
         playerView.frame = keyWindow.frame
         keyWindow.addSubview(playerView)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return loadingStack
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return episodes.count == 0 ? 250 : 0
     }
 }
