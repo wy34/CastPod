@@ -10,6 +10,7 @@ import UIKit
 class PodcastsSearchController: UITableViewController {
     // MARK: - Properties
     var podcasts = [Podcast]()
+    var timer: Timer?
     
     // MARK: - Views
     
@@ -38,7 +39,7 @@ class PodcastsSearchController: UITableViewController {
         searchController.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        searchBar(searchController.searchBar, textDidChange: "Voong")
+        searchBar(searchController.searchBar, textDidChange: "Sean Allen")
     }
     
     private func fetchPodcasts(_ searchQuery: String) {
@@ -88,7 +89,11 @@ extension PodcastsSearchController {
 // MARK: - UISearchBarDelegate
 extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        fetchPodcasts(searchText)
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
+            #warning("delay when pressing x on search bar")
+            self?.fetchPodcasts(searchText)
+        })
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

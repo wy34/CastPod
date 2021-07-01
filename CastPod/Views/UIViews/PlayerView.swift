@@ -108,6 +108,7 @@ class PlayerView: UIView {
         let newPlayerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: newPlayerItem)
         updatePlayPauseButtonTo(play: true)
+        volumeSlider.value = player.volume 
     }
     
     private func setupEpisodePlaybackDetails() {
