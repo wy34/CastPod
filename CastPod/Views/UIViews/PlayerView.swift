@@ -23,7 +23,6 @@ class PlayerView: UIView {
     }
     
     let player = AVPlayer()
-    var dragGesture: UIPanGestureRecognizer?
     
     // MARK: - Views
     private let miniPlayerView = MiniPlayerView()
@@ -54,7 +53,7 @@ class PlayerView: UIView {
     private let maxVolImageView = CPButton(image: SFSymbols.volumeUp, font: .systemFont(ofSize: 10, weight: .bold), tintColor: Colors.darkModeSymbol)
     private lazy var volumeStack = CPStackView(views: [minVolImageView, volumeSlider, maxVolImageView], spacing: 10, distribution: .fill, alignment: .fill)
 
-    private lazy var overallStack = CPStackView(views: [episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
+    private lazy var overallStack = CPStackView(views: [topButtonStack, episodeImageView, timeStack, artistStack, buttonStack, volumeStack], axis: .vertical, spacing: 20, distribution: .fill, alignment: .fill)
     
     private let blackBgView = CPView(bgColor: .black.withAlphaComponent(0.4))
     private let episodeDescriptionCardView = EpisodeDescriptionCardView()
@@ -92,17 +91,13 @@ class PlayerView: UIView {
     }
 
     private func layoutUI() {
-        addSubviews(topButtonStack, overallStack, miniPlayerView)
+        addSubviews(overallStack, miniPlayerView)
         miniPlayerView.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor)
         miniPlayerView.setDimension(height: 64)
         
-        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor)
-        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.18)
-        topButtonStack.center(to: self, by: .centerX)
-        
-        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.67)
-        overallStack.anchor(top: topButtonStack.bottomAnchor, paddingTop: 5)
-        overallStack.center(to: self, by: .centerX)
+        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 1.85)
+        overallStack.center(x: centerXAnchor, y: centerYAnchor)
+        topButtonStack.setDimension(height: widthAnchor, hMult: 0.075)
         episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
         artistStack.setDimension(height: widthAnchor, hMult: 0.18)
@@ -119,10 +114,8 @@ class PlayerView: UIView {
         volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
         blackBgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissDescriptionMenu)))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
-        
-        dragGesture = UIPanGestureRecognizer(target: self, action: #selector(dragPlayerView))
-        dragGesture?.isEnabled = false
-        self.addGestureRecognizer(dragGesture!)
+        miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragMiniPlayerView)))
+        overallStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragToDismissPlayerView)))
     }
     
     private func playAudioAt(urlString: String?) {
@@ -183,13 +176,11 @@ class PlayerView: UIView {
     }
     
     func hideMainPlayerView() {
-        topButtonStack.alpha = 0
         overallStack.alpha = 0
         miniPlayerView.alpha = 1
     }
     
     func showMainPlayerView() {
-        topButtonStack.alpha = 1
         overallStack.alpha = 1
         miniPlayerView.alpha = 0
     }
@@ -197,12 +188,10 @@ class PlayerView: UIView {
     // MARK: - Selector
     @objc func dismissView() {
         UIApplication.shared.rootViewController?.minimizePlayerView()
-        dragGesture?.isEnabled = true
     }
     
     @objc func maximizePlayerView() {
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: nil)
-        dragGesture?.isEnabled = false
     }
     
     @objc func displayDescriptionMenu() {
@@ -232,7 +221,7 @@ class PlayerView: UIView {
         }
     }
     
-    @objc func dragPlayerView(gesture: UIPanGestureRecognizer) {
+    @objc func dragMiniPlayerView(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self.superview)
         let velocity = gesture.velocity(in: self.superview)
         
@@ -251,6 +240,20 @@ class PlayerView: UIView {
                     self.overallStack.alpha = 0
                 }
             }
+        }
+    }
+    
+    @objc func dragToDismissPlayerView(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.superview)
+        
+        if gesture.state == .changed {
+            overallStack.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        } else if gesture.state == .ended {
+            UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
+                self.overallStack.transform = .identity
+            }
+            
+            if translation.y > 75 { UIApplication.shared.rootViewController?.minimizePlayerView() }
         }
     }
     

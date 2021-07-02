@@ -23,7 +23,7 @@ class MiniPlayerView: UIView {
         didSet {
             guard let episode = episode else { return }
             episodeImageView.setImage(with: episode.imageUrl, completion: nil)
-            titleLabel.text = episode.title
+            titleLabel.text = "\(episode.title ?? "")               "
         }
     }
     
