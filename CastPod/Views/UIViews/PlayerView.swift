@@ -18,6 +18,7 @@ class PlayerView: UIView {
             titleLabel.text = "\(episode.title ?? "")               "
             artistLabel.text = episode.artist
             playAudioAt(urlString: episode.streamUrl)
+            miniPlayerView.episode = episode
         }
     }
     

@@ -19,8 +19,16 @@ class MiniPlayerView: UIView {
     var currentPlayer: AVPlayer?
     weak var delegate: MiniPlayerViewDelegate?
     
+    var episode: Episode? {
+        didSet {
+            guard let episode = episode else { return }
+            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
+            titleLabel.text = episode.title
+        }
+    }
+    
     // MARK: - Views
-    private let episodeImageView = CPImageView(image: Asset.placeholder, contentMode: .scaleAspectFit)
+    private let episodeImageView = CPImageView(image: nil, contentMode: .scaleAspectFit)
     private let titleLabel = MarqueeLabel(frame: .zero, duration: 12, fadeLength: 25)
     private let playPauseButton = CPButton(image: SFSymbols.playButton, font: .systemFont(ofSize: 20, weight: .bold), tintColor: Colors.darkModeSymbol)
     private let forwardButton = CPButton(image: SFSymbols.forward15, font: .systemFont(ofSize: 20, weight: .bold), tintColor: Colors.darkModeSymbol)
@@ -44,7 +52,6 @@ class MiniPlayerView: UIView {
         episodeImageView.layer.cornerRadius = 10
         episodeImageView.clipsToBounds = true
         titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        titleLabel.text = "My Experiences in Computer Science VS REal World"
     }
     
     private func layoutUI() {
