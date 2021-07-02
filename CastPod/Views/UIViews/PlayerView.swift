@@ -64,6 +64,7 @@ class PlayerView: UIView {
         configureUI()
         layoutUI()
         setupActionsAndGestures()
+        setupAudioSession()
         setupEpisodePlaybackDetails()
     }
 
@@ -116,6 +117,15 @@ class PlayerView: UIView {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
         self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragToDismissPlayerView)))
         miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragMiniPlayerView)))
+    }
+    
+    private func setupAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     private func playAudioAt(urlString: String?) {
