@@ -23,12 +23,13 @@ class PlayerView: UIView {
     }
     
     let player = AVPlayer()
-
+    var dragGesture: UIPanGestureRecognizer?
+    
     // MARK: - Views
     private let miniPlayerView = MiniPlayerView()
     
-    private let dismissButton = CPButton(image: SFSymbols.xmark, font: .systemFont(ofSize: 16, weight: .bold), tintColor: Colors.darkModeSymbol)
-    private let descriptionButton = CPButton(image: SFSymbols.information, font: .systemFont(ofSize: 18, weight: .bold), tintColor: Colors.darkModeSymbol)
+    private let dismissButton = CPButton(image: SFSymbols.xmark, font: .systemFont(ofSize: 18, weight: .bold), tintColor: Colors.darkModeSymbol)
+    private let descriptionButton = CPButton(image: SFSymbols.information, font: .systemFont(ofSize: 20, weight: .bold), tintColor: Colors.darkModeSymbol)
     private lazy var topButtonStack = CPStackView(views: [dismissButton, UIView(), descriptionButton], distribution: .fill)
     
     private let episodeImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
@@ -95,12 +96,12 @@ class PlayerView: UIView {
         miniPlayerView.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor)
         miniPlayerView.setDimension(height: 64)
         
-        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor, paddingTop: 10)
-        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.15)
+        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor)
+        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.18)
         topButtonStack.center(to: self, by: .centerX)
         
-        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.7)
-        overallStack.anchor(top: topButtonStack.bottomAnchor)
+        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.67)
+        overallStack.anchor(top: topButtonStack.bottomAnchor, paddingTop: 5)
         overallStack.center(to: self, by: .centerX)
         episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
@@ -118,6 +119,10 @@ class PlayerView: UIView {
         volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
         blackBgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissDescriptionMenu)))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
+        
+        dragGesture = UIPanGestureRecognizer(target: self, action: #selector(dragPlayerView))
+        dragGesture?.isEnabled = false
+        self.addGestureRecognizer(dragGesture!)
     }
     
     private func playAudioAt(urlString: String?) {
@@ -192,10 +197,12 @@ class PlayerView: UIView {
     // MARK: - Selector
     @objc func dismissView() {
         UIApplication.shared.rootViewController?.minimizePlayerView()
+        dragGesture?.isEnabled = true
     }
     
     @objc func maximizePlayerView() {
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: nil)
+        dragGesture?.isEnabled = false
     }
     
     @objc func displayDescriptionMenu() {
@@ -222,6 +229,28 @@ class PlayerView: UIView {
         } completion: { _ in
             self.blackBgView.removeFromSuperview()
             self.episodeDescriptionCardView.removeFromSuperview()
+        }
+    }
+    
+    @objc func dragPlayerView(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: self.superview)
+        let velocity = gesture.velocity(in: self.superview)
+        
+        if gesture.state == .changed {
+            self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            self.miniPlayerView.alpha = 1 + translation.y / 500
+            self.overallStack.alpha = -translation.y / 500
+        } else if gesture.state == .ended {
+            UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
+                self.transform = .identity
+
+                if translation.y < -250 || velocity.y < -250 {
+                    self.maximizePlayerView()
+                } else {
+                    self.miniPlayerView.alpha = 1
+                    self.overallStack.alpha = 0
+                }
+            }
         }
     }
     
