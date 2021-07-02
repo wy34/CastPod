@@ -10,6 +10,7 @@ import UIKit
 class RootTabBarController: UITabBarController {
     // MARK: - Properties
     var maximizedTopAnchorConstraint: NSLayoutConstraint?
+    var maximizedBottomAnchorConstraint: NSLayoutConstraint?
     var minimizedTopAnchorConstraint: NSLayoutConstraint?
     
     // MARK: - Views
@@ -46,13 +47,19 @@ class RootTabBarController: UITabBarController {
         minimizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
         maximizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         maximizedTopAnchorConstraint?.isActive = true
+        maximizedBottomAnchorConstraint = playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height)
+        maximizedBottomAnchorConstraint?.isActive = true
         
-        playerView.anchor(trailing: view.trailingAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor)
+        playerView.anchor(trailing: view.trailingAnchor, leading: view.leadingAnchor)
     }
     
     private func animatePlayerViewConstraintsTo(show: Bool) {
-        maximizedTopAnchorConstraint?.constant = show ? 0 : view.frame.height
         maximizedTopAnchorConstraint?.isActive = show ? true : false
+        maximizedTopAnchorConstraint?.constant = show ? 0 : view.frame.height
+        
+        maximizedBottomAnchorConstraint?.isActive = show ? true : false
+        maximizedBottomAnchorConstraint?.constant = show ? 0 : view.frame.height
+        
         minimizedTopAnchorConstraint?.isActive = show ? false : true
         
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
