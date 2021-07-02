@@ -95,9 +95,19 @@ class PlayerView: UIView {
         miniPlayerView.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor)
         miniPlayerView.setDimension(height: 64)
         
+<<<<<<< HEAD
         overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 1.85)
         overallStack.center(x: centerXAnchor, y: centerYAnchor)
         topButtonStack.setDimension(height: widthAnchor, hMult: 0.075)
+=======
+        topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor)
+        topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.18)
+        topButtonStack.center(to: self, by: .centerX)
+        
+        overallStack.setDimension(width: topButtonStack.widthAnchor, height: widthAnchor, hMult: 1.67)
+        overallStack.anchor(top: topButtonStack.bottomAnchor, paddingTop: 5)
+        overallStack.center(to: self, by: .centerX)
+>>>>>>> 00b11a655bc0545439f0ad7dd4759d1d0ff808a9
         episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
         artistStack.setDimension(height: widthAnchor, hMult: 0.18)
@@ -114,8 +124,15 @@ class PlayerView: UIView {
         volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
         blackBgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissDescriptionMenu)))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
+<<<<<<< HEAD
         miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragMiniPlayerView)))
         overallStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragToDismissPlayerView)))
+=======
+        
+        dragGesture = UIPanGestureRecognizer(target: self, action: #selector(dragPlayerView))
+        dragGesture?.isEnabled = false
+        self.addGestureRecognizer(dragGesture!)
+>>>>>>> 00b11a655bc0545439f0ad7dd4759d1d0ff808a9
     }
     
     private func playAudioAt(urlString: String?) {
@@ -188,10 +205,12 @@ class PlayerView: UIView {
     // MARK: - Selector
     @objc func dismissView() {
         UIApplication.shared.rootViewController?.minimizePlayerView()
+        dragGesture?.isEnabled = true
     }
     
     @objc func maximizePlayerView() {
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: nil)
+        dragGesture?.isEnabled = false
     }
     
     @objc func displayDescriptionMenu() {
@@ -221,7 +240,11 @@ class PlayerView: UIView {
         }
     }
     
+<<<<<<< HEAD
     @objc func dragMiniPlayerView(gesture: UIPanGestureRecognizer) {
+=======
+    @objc func dragPlayerView(gesture: UIPanGestureRecognizer) {
+>>>>>>> 00b11a655bc0545439f0ad7dd4759d1d0ff808a9
         let translation = gesture.translation(in: self.superview)
         let velocity = gesture.velocity(in: self.superview)
         
@@ -243,6 +266,7 @@ class PlayerView: UIView {
         }
     }
     
+<<<<<<< HEAD
     @objc func dragToDismissPlayerView(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self.superview)
         
@@ -257,6 +281,8 @@ class PlayerView: UIView {
         }
     }
     
+=======
+>>>>>>> 00b11a655bc0545439f0ad7dd4759d1d0ff808a9
     @objc func playPauseAudio() {
         let isPaused = player.timeControlStatus == .paused
         updatePlayPauseButtonTo(play: isPaused)
