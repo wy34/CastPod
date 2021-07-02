@@ -8,6 +8,7 @@
 import UIKit
 import MarqueeLabel
 import AVKit
+import MediaPlayer
 
 class PlayerView: UIView {
     // MARK: - Properties
@@ -65,6 +66,7 @@ class PlayerView: UIView {
         layoutUI()
         setupActionsAndGestures()
         setupAudioSession()
+        setupCommandCenterRemote()
         setupEpisodePlaybackDetails()
     }
 
@@ -125,6 +127,20 @@ class PlayerView: UIView {
             try AVAudioSession.sharedInstance().setCategory(.playback)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    private func setupCommandCenterRemote() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        for command in [commandCenter.playCommand, commandCenter.pauseCommand, commandCenter.togglePlayPauseCommand] {
+            command.isEnabled = true
+            command.addTarget { [weak self] _ in
+                self?.handlePlayPausePressed()
+                return .success
+            }
         }
     }
     
