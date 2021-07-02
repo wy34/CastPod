@@ -19,7 +19,7 @@ class PlayerView: UIView {
             artistLabel.text = episode.artist
             playAudioAt(urlString: episode.streamUrl)
             miniPlayerView.episode = episode
-            setupLockScreenInfo()
+            setupLockScreenTitleAndArtist()
             episodeImageView.setImage(with: episode.imageUrl) { image in
                 guard let image = image else { return }
                 let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
@@ -149,10 +149,19 @@ class PlayerView: UIView {
         }
     }
     
-    private func setupLockScreenInfo() {
+    private func setupLockScreenTitleAndArtist() {
         var nowPlayingInfo = [String: Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = episode?.title
         nowPlayingInfo[MPMediaItemPropertyArtist] = episode?.artist
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func setupLockScreenTime() {
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+        let duration = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 2))
+        let elapsed = CMTimeGetSeconds(player.currentTime())
+        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = duration
+        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsed
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
@@ -179,6 +188,7 @@ class PlayerView: UIView {
         player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] time in
             self?.minTimeLabel.text = time.toFormattedString()
             self?.updateTimeSlider()
+            self?.setupLockScreenTime()
         }
     }
     
