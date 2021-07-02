@@ -15,11 +15,16 @@ class PlayerView: UIView {
     var episode: Episode? {
         didSet {
             guard let episode = episode else { return }
-            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
             titleLabel.text = "\(episode.title ?? "")               "
             artistLabel.text = episode.artist
             playAudioAt(urlString: episode.streamUrl)
             miniPlayerView.episode = episode
+            setupLockScreenInfo()
+            episodeImageView.setImage(with: episode.imageUrl) { image in
+                guard let image = image else { return }
+                let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+            }
         }
     }
     
@@ -142,6 +147,13 @@ class PlayerView: UIView {
                 return .success
             }
         }
+    }
+    
+    private func setupLockScreenInfo() {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = episode?.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = episode?.artist
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     private func playAudioAt(urlString: String?) {

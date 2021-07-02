@@ -8,11 +8,11 @@
 import UIKit
 
 extension UIImageView {
-    func setImage(with url: String?, completion: (() -> Void)?) {
+    func setImage(with url: String?, completion: ((UIImage?) -> Void)?) {
         APIManager.shared.downloadImageFor(url) { image in
             DispatchQueue.main.async {
                 self.image = image
-                completion?()
+                completion?(image)
             }
         }
     }
