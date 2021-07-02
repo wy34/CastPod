@@ -199,7 +199,7 @@ class PlayerView: UIView {
 
         blackBgView.frame = .init(x: 0, y: 0, width: keyWindow.frame.width, height: keyWindow.frame.height)
         episodeDescriptionCardView.frame = .init(x: 0, y: keyWindow.frame.height, width: keyWindow.frame.width, height: keyWindow.frame.height / 2)
-        episodeDescriptionCardView.episodeDescription = episode?.description
+        episodeDescriptionCardView.episode = episode
         
         keyWindow.addSubviews(blackBgView, episodeDescriptionCardView)
 
@@ -247,14 +247,22 @@ class PlayerView: UIView {
         let translation = gesture.translation(in: self.superview)
         
         if gesture.state == .changed && translation.y > 0 {
-                self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            self.overallStack.alpha = 1 - translation.y / 500
+            self.miniPlayerView.alpha = translation.y / 500
         } else if gesture.state == .ended {
             UIView.animate(withDuration: 0.35) {
                 self.transform = .identity
-                if translation.y > 50 { UIApplication.shared.rootViewController?.minimizePlayerView() }
+                if translation.y > 50 {
+                    UIApplication.shared.rootViewController?.minimizePlayerView()
+                } else {
+                    self.overallStack.alpha = 1
+                    self.miniPlayerView.alpha = 0
+                }
             }
         }
     }
+    
     @objc func playPauseAudio() {
         let isPaused = player.timeControlStatus == .paused
         updatePlayPauseButtonTo(play: isPaused)

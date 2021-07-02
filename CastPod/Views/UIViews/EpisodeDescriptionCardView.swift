@@ -9,8 +9,10 @@ import UIKit
 
 class EpisodeDescriptionCardView: UIView {
     // MARK: - Properties
-    var episodeDescription: String? {
+    var episode: Episode? {
         didSet {
+            guard let episode = episode else { return }
+            dateLabel.text = episode.pubDate?.stringWith(format: "MMM dd, yyyy")
             tableView.reloadData()
         }
     }
@@ -19,6 +21,8 @@ class EpisodeDescriptionCardView: UIView {
     
     // MARK: - Views
     private let titleLabel = CPLabel(text: "Description", font: .systemFont(ofSize: 26, weight: .bold))
+    private let dateLabel = CPLabel(text: "Jul 2, 2021", font: .systemFont(ofSize: 16, weight: .bold))
+    private lazy var labelStack = CPStackView(views: [titleLabel, dateLabel], distribution: .fillEqually)
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -49,13 +53,15 @@ class EpisodeDescriptionCardView: UIView {
     private func configureUI() {
         layer.cornerRadius = 15
         backgroundColor = .systemGray4
+        dateLabel.textAlignment = .right
+        dateLabel.textColor = Colors.appTintColor
     }
     
     private func layoutUI() {
-        addSubviews(titleLabel, tableView)
-        titleLabel.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor, paddingTrailing: 16, paddingLeading: 16)
-        titleLabel.setDimension(height: widthAnchor, hMult: 0.15)
-        tableView.anchor(top: titleLabel.bottomAnchor, trailing: trailingAnchor, bottom: bottomAnchor, leading: leadingAnchor)
+        addSubviews(labelStack, tableView)
+        labelStack.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor, paddingTrailing: 16, paddingLeading: 16)
+        labelStack.setDimension(height: widthAnchor, hMult: 0.15)
+        tableView.anchor(top: labelStack.bottomAnchor, trailing: trailingAnchor, bottom: bottomAnchor, leading: leadingAnchor)
     }
 }
 
@@ -67,7 +73,7 @@ extension EpisodeDescriptionCardView: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
-        cell.textLabel?.text = episodeDescription?.removeHTML()?.removeNewLines()?.removeBackSlashes() ?? ""
+        cell.textLabel?.text = episode?.description?.removeHTML()?.removeNewLines()?.removeBackSlashes() ?? ""
         cell.textLabel?.numberOfLines = 0
         cell.backgroundColor = .clear
         cell.textLabel?.font = .systemFont(ofSize: 20, weight: .medium)
