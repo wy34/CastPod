@@ -77,6 +77,7 @@ extension EpisodesController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIApplication.shared.rootViewController?.playerView.episode = nil
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: episodes[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
     }

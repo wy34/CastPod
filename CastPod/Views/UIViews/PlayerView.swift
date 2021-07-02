@@ -24,6 +24,8 @@ class PlayerView: UIView {
     let player = AVPlayer()
 
     // MARK: - Views
+    private let miniPlayerView = MiniPlayerView()
+    
     private let dismissButton = CPButton(image: SFSymbols.xmark, font: .systemFont(ofSize: 16, weight: .bold), tintColor: Colors.darkModeSymbol)
     private let descriptionButton = CPButton(image: SFSymbols.information, font: .systemFont(ofSize: 18, weight: .bold), tintColor: Colors.darkModeSymbol)
     private lazy var topButtonStack = CPStackView(views: [dismissButton, UIView(), descriptionButton], distribution: .fill)
@@ -83,10 +85,14 @@ class PlayerView: UIView {
         artistLabel.textAlignment = .center
         volumeSlider.tintColor = Colors.sliderTintColor
         blackBgView.alpha = 0
+        miniPlayerView.delegate = self
+        miniPlayerView.currentPlayer = player
     }
 
     private func layoutUI() {
-        addSubviews(topButtonStack, overallStack)
+        addSubviews(topButtonStack, overallStack, miniPlayerView)
+        miniPlayerView.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor)
+        miniPlayerView.setDimension(height: 64)
         
         topButtonStack.anchor(top: safeAreaLayoutGuide.topAnchor, paddingTop: 10)
         topButtonStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 0.15)
@@ -143,9 +149,11 @@ class PlayerView: UIView {
         if play {
             player.play()
             playButton.setImage(SFSymbols.pauseButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
+            miniPlayerView.updatePlayPauseButtonTo(play: true)
         } else {
             player.pause()
             playButton.setImage(SFSymbols.playButton.applyingSymbolConfiguration(.init(font: .systemFont(ofSize: 32, weight: .bold))), for: .normal)
+            miniPlayerView.updatePlayPauseButtonTo(play: false)
         }
     }
     
@@ -166,6 +174,18 @@ class PlayerView: UIView {
         let cmTimeSeconds = CMTimeMakeWithSeconds(seconds, preferredTimescale: 1)
         let seekTime = player.currentTime() + cmTimeSeconds
         player.seek(to: seekTime)
+    }
+    
+    func hideMainPlayerView() {
+        topButtonStack.alpha = 0
+        overallStack.alpha = 0
+        miniPlayerView.alpha = 1
+    }
+    
+    func showMainPlayerView() {
+        topButtonStack.alpha = 1
+        overallStack.alpha = 1
+        miniPlayerView.alpha = 0
     }
 
     // MARK: - Selector
@@ -231,8 +251,16 @@ class PlayerView: UIView {
     }
 }
 
-
-
+// MARK: - MiniPlayerViewDelegate
+extension PlayerView: MiniPlayerViewDelegate {
+    func handlePlayPausePressed() {
+        playPauseAudio()
+    }
+    
+    func handleForward15Pressed() {
+        forward15()
+    }
+}
 
 
 

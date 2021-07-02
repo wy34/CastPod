@@ -13,7 +13,7 @@ class RootTabBarController: UITabBarController {
     var minimizedTopAnchorConstraint: NSLayoutConstraint?
     
     // MARK: - Views
-    private let playerView = PlayerView()
+    let playerView = PlayerView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -50,27 +50,29 @@ class RootTabBarController: UITabBarController {
         playerView.anchor(trailing: view.trailingAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor)
     }
     
-    func minimizePlayerView() {
-        maximizedTopAnchorConstraint?.isActive = false
-        minimizedTopAnchorConstraint?.isActive = true
+    private func animatePlayerViewConstraintsTo(show: Bool) {
+        maximizedTopAnchorConstraint?.constant = show ? 0 : view.frame.height
+        maximizedTopAnchorConstraint?.isActive = show ? true : false
+        minimizedTopAnchorConstraint?.isActive = show ? false : true
         
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
             self.view.layoutIfNeeded()
         }
-        
-        self.tabBar.frame.origin.y = 0
+        self.tabBar.frame.origin.y = show ? self.view.frame.height : 0
+    }
+    
+    func minimizePlayerView() {
+        playerView.hideMainPlayerView()
+        animatePlayerViewConstraintsTo(show: false)
     }
     
     func maximizePlayerView(episode: Episode?) {
-        maximizedTopAnchorConstraint?.constant = 0
-        maximizedTopAnchorConstraint?.isActive = true
-        minimizedTopAnchorConstraint?.isActive = false
+        playerView.showMainPlayerView()
         
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
-            self.view.layoutIfNeeded()
+        animatePlayerViewConstraintsTo(show: true)
+        
+        if playerView.episode == nil {
+            playerView.episode = episode
         }
-        
-        self.tabBar.frame.origin.y = self.view.frame.height
-        playerView.episode = episode
     }
 }
