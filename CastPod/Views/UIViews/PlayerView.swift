@@ -114,8 +114,8 @@ class PlayerView: UIView {
         volumeSlider.addTarget(self, action: #selector(changeVolume), for: .valueChanged)
         blackBgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissDescriptionMenu)))
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayerView)))
+        self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragToDismissPlayerView)))
         miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragMiniPlayerView)))
-        overallStack.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragToDismissPlayerView)))
     }
     
     private func playAudioAt(urlString: String?) {
@@ -246,14 +246,13 @@ class PlayerView: UIView {
     @objc func dragToDismissPlayerView(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self.superview)
         
-        if gesture.state == .changed {
-            overallStack.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        if gesture.state == .changed && translation.y > 0 {
+                self.transform = CGAffineTransform(translationX: 0, y: translation.y)
         } else if gesture.state == .ended {
-            UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut) {
-                self.overallStack.transform = .identity
+            UIView.animate(withDuration: 0.35) {
+                self.transform = .identity
+                if translation.y > 50 { UIApplication.shared.rootViewController?.minimizePlayerView() }
             }
-            
-            if translation.y > 75 { UIApplication.shared.rootViewController?.minimizePlayerView() }
         }
     }
     @objc func playPauseAudio() {

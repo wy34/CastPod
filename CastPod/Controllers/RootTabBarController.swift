@@ -54,28 +54,27 @@ class RootTabBarController: UITabBarController {
     }
     
     private func animatePlayerViewConstraintsTo(show: Bool) {
-        maximizedTopAnchorConstraint?.isActive = show ? true : false
-        maximizedTopAnchorConstraint?.constant = show ? 0 : view.frame.height
-        
-        maximizedBottomAnchorConstraint?.isActive = show ? true : false
-        maximizedBottomAnchorConstraint?.constant = show ? 0 : view.frame.height
-        
-        minimizedTopAnchorConstraint?.isActive = show ? false : true
-        
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut) {
+        UIView.animate(withDuration: 0.35) {
+            self.tabBar.isHidden = show ? true : false
+            self.maximizedTopAnchorConstraint?.isActive = show ? true : false
+            self.maximizedTopAnchorConstraint?.constant = show ? 0 : self.view.frame.height
+            
+            self.maximizedBottomAnchorConstraint?.isActive = show ? true : false
+            self.maximizedBottomAnchorConstraint?.constant = show ? 0 : self.view.frame.height
+            
+            self.minimizedTopAnchorConstraint?.isActive = show ? false : true
+            
+            if show { self.playerView.showMainPlayerView() } else { self.playerView.hideMainPlayerView() }
+            
             self.view.layoutIfNeeded()
         }
-        self.tabBar.frame.origin.y = show ? self.view.frame.height : 0
     }
     
     func minimizePlayerView() {
-        playerView.hideMainPlayerView()
         animatePlayerViewConstraintsTo(show: false)
     }
     
     func maximizePlayerView(episode: Episode?) {
-        playerView.showMainPlayerView()
-        
         animatePlayerViewConstraintsTo(show: true)
         
         if playerView.episode == nil {
