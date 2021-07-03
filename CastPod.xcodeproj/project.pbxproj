@@ -29,6 +29,8 @@
 		4C975B83268A94D300ED882D /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B82268A94D300ED882D /* UIImageView.swift */; };
 		4C975B85268AC64200ED882D /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B84268AC64200ED882D /* EpisodesController.swift */; };
 		4C975B87268ACEE800ED882D /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C975B86268ACEE800ED882D /* Episode.swift */; };
+		4CC5195526910D5600F02B90 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5195426910D5600F02B90 /* FavoritesController.swift */; };
+		4CC519582691115D00F02B90 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC519572691115D00F02B90 /* FavoriteCell.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -64,6 +66,8 @@
 		4C975B82268A94D300ED882D /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		4C975B84268AC64200ED882D /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
 		4C975B86268ACEE800ED882D /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		4CC5195426910D5600F02B90 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
+		4CC519572691115D00F02B90 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +136,14 @@
 			path = GenericViews;
 			sourceTree = "<group>";
 		};
+		4CC519562691114A00F02B90 /* UICollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				4CC519572691115D00F02B90 /* FavoriteCell.swift */,
+			);
+			path = UICollectionViewCells;
+			sourceTree = "<group>";
+		};
 		4CE3276D268978A50064221C = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +191,7 @@
 		4CE3278E26897AE00064221C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4CC519562691114A00F02B90 /* UICollectionViewCells */,
 				4C074542268BA89C000EFA3B /* UIViews */,
 				4C975B7B268A763C00ED882D /* GenericViews */,
 				4C074541268BA894000EFA3B /* UITableViewCells */,
@@ -192,6 +205,7 @@
 				4CE3279526897D680064221C /* RootTabBarController.swift */,
 				4CE3277D268978A60064221C /* PodcastsSearchController.swift */,
 				4C975B84268AC64200ED882D /* EpisodesController.swift */,
+				4CC5195426910D5600F02B90 /* FavoritesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -381,9 +395,11 @@
 				4CE3279626897D680064221C /* RootTabBarController.swift in Sources */,
 				4C975B81268A788100ED882D /* CPImageView.swift in Sources */,
 				4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */,
+				4CC519582691115D00F02B90 /* FavoriteCell.swift in Sources */,
 				4C975B7D268A765200ED882D /* CPLabel.swift in Sources */,
 				4C801014268E6D5C00D4A02B /* MiniPlayerView.swift in Sources */,
 				4C801012268E5CDE00D4A02B /* EpisodeDescriptionCardView.swift in Sources */,
+				4CC5195526910D5600F02B90 /* FavoritesController.swift in Sources */,
 				4C074540268BA83B000EFA3B /* CPView.swift in Sources */,
 				4CE3277A268978A60064221C /* AppDelegate.swift in Sources */,
 				4C975B87268ACEE800ED882D /* Episode.swift in Sources */,
