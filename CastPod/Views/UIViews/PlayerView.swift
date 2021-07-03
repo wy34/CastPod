@@ -17,6 +17,7 @@ class PlayerView: UIView {
             guard let episode = episode else { return }
             titleLabel.text = "\(episode.title ?? "")               "
             artistLabel.text = episode.artist
+            setupAudioSession()
             playAudioAt(urlString: episode.streamUrl)
             miniPlayerView.episode = episode
             setupLockScreenTitleAndArtist()
@@ -72,9 +73,9 @@ class PlayerView: UIView {
         configureUI()
         layoutUI()
         setupActionsAndGestures()
-        setupAudioSession()
         setupCommandCenterRemote()
         setupEpisodePlaybackDetails()
+        setupAudioInterruptionObserver()
     }
 
     required init?(coder: NSCoder) {
@@ -183,6 +184,10 @@ class PlayerView: UIView {
         nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = duration
         nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsed
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func setupAudioInterruptionObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
     }
     
     private func playAudioAt(urlString: String?) {
@@ -337,6 +342,19 @@ class PlayerView: UIView {
         scaleImageView(up: isPaused)
     }
 
+    @objc func handleInterruption(notification: Notification) {
+        guard let notificationType = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
+        
+        if notificationType == AVAudioSession.InterruptionType.began.rawValue {
+            updatePlayPauseButtonTo(play: false)
+        } else {
+            guard let options = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            if options == AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+                updatePlayPauseButtonTo(play: true)
+            }
+        }
+    }
+    
     @objc func scrubEpisodeTime() {
         let sliderPercentage = timeSlider.value
         let durationSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
