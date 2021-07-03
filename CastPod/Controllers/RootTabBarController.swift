@@ -74,11 +74,15 @@ class RootTabBarController: UITabBarController {
         animatePlayerViewConstraintsTo(show: false)
     }
     
-    func maximizePlayerView(episode: Episode?) {
+    func maximizePlayerView(episode: Episode?, episodeList: [Episode] = []) {
         animatePlayerViewConstraintsTo(show: true)
         
         if playerView.episode == nil {
             playerView.episode = episode
+        }
+        
+        if !episodeList.isEmpty {
+            playerView.episodeList = episodeList
         }
     }
 }

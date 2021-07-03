@@ -28,6 +28,8 @@ class PlayerView: UIView {
         }
     }
     
+    var episodeList = [Episode]()
+    
     let player = AVPlayer()
     
     // MARK: - Views
@@ -143,9 +145,27 @@ class PlayerView: UIView {
         for command in [commandCenter.playCommand, commandCenter.pauseCommand, commandCenter.togglePlayPauseCommand] {
             command.isEnabled = true
             command.addTarget { [weak self] _ in
-                self?.handlePlayPausePressed()
+                self?.playPauseAudio()
                 return .success
             }
+        }
+        
+        for command in [commandCenter.nextTrackCommand, commandCenter.previousTrackCommand] {
+            command.isEnabled = true
+            command.addTarget { [weak self] _ in
+                self?.play(next: command == commandCenter.nextTrackCommand ? true : false)
+                return .success
+            }
+        }
+    }
+    
+    private func play(next: Bool) {
+        guard let currentEpisodeIndex = episodeList.firstIndex(where: { $0.title == episode?.title && $0.pubDate == episode?.pubDate }) else { return }
+
+        if next {
+            episode = currentEpisodeIndex == episodeList.count - 1 ? episodeList[0] : episodeList[currentEpisodeIndex + 1]
+        } else {
+            episode = currentEpisodeIndex == 0 ? episodeList[episodeList.count - 1] : episodeList[currentEpisodeIndex - 1]
         }
     }
     
@@ -170,7 +190,7 @@ class PlayerView: UIView {
         let newPlayerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: newPlayerItem)
         updatePlayPauseButtonTo(play: true)
-        volumeSlider.value = player.volume 
+        volumeSlider.value = player.volume
     }
     
     private func setupEpisodePlaybackDetails() {
