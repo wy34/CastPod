@@ -21,6 +21,8 @@ class RootTabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarController()
         layoutView()
+        
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     // MARK: - Helpers

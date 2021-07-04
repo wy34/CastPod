@@ -9,6 +9,7 @@ import UIKit
 
 class FavoritesController: UIViewController {
     // MARK: - Properties
+    var favorites = FavoritesManager.shared.fetchFavoritePodcasts()
     
     // MARK: - Views
     private lazy var collectionView: UICollectionView = {
@@ -27,6 +28,7 @@ class FavoritesController: UIViewController {
         super.viewDidLoad()
         configureUI()
         layoutUI()
+        setupNotificationObservers()
     }
     
     // MARK: - Helpers
@@ -38,17 +40,27 @@ class FavoritesController: UIViewController {
         view.addSubview(collectionView)
         collectionView.anchor(top: view.topAnchor, trailing: view.trailingAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor)
     }
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadFavorites), name: .shouldReloadFavorites, object: nil)
+    }
+    
+    // MARK: - Selectors
+    @objc func reloadFavorites() {
+        favorites = FavoritesManager.shared.fetchFavoritePodcasts()
+        collectionView.reloadData()
+    }
 }
-
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension FavoritesController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 50
+        return favorites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.reuseId, for: indexPath) as! FavoriteCell
+        cell.podcast = favorites[indexPath.item]
         return cell
     }
     

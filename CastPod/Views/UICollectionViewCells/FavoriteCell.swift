@@ -11,6 +11,15 @@ class FavoriteCell: UICollectionViewCell {
     // MARK: - Properties
     static let reuseId = "FavoriteCell"
     
+    var podcast: Podcast? {
+        didSet {
+            guard let podcast = podcast else { return }
+            podcastImageView.setImage(with: podcast.artworkUrl600, completion: nil)
+            titleLabel.text = podcast.trackName
+            artistLabel.text = podcast.artistName
+        }
+    }
+    
     // MARK: - Views
     private let podcastImageView = CPImageView(image: Asset.placeholder, contentMode: .scaleAspectFill)
     private let titleLabel = CPLabel(text: "Podcast Name", font: .systemFont(ofSize: 18, weight: .bold))

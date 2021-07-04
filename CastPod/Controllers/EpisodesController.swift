@@ -30,11 +30,13 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         configureTableView()
+        checkIfPodcastIsAlreadyFavorited()
     }
     
     // MARK: - Helpers
     private func configureNavBar(title: String) {
         navigationItem.title = title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: SFSymbols.heart, style: .plain, target: self, action: #selector(favoritePodcast))
     }
     
     private func configureTableView() {
@@ -61,6 +63,27 @@ class EpisodesController: UITableViewController {
                     self.showAlert("Error", error.localizedDescription)
             }
         }
+    }
+    
+    private func checkIfPodcastIsAlreadyFavorited() {
+        if FavoritesManager.shared.checkIfAlreadyFavorited(podcast: podcast) {
+            navigationItem.rightBarButtonItem?.image = SFSymbols.heartFill
+        }
+    }
+    
+    // MARK: - Selectors
+    @objc func favoritePodcast() {
+        let currentButtonImage = navigationItem.rightBarButtonItem?.image
+        
+        if currentButtonImage == SFSymbols.heart {
+            navigationItem.rightBarButtonItem?.image = SFSymbols.heartFill
+            FavoritesManager.shared.saveAsFavorite(podcast: podcast)
+        } else if currentButtonImage == SFSymbols.heartFill {
+            navigationItem.rightBarButtonItem?.image = SFSymbols.heart
+            FavoritesManager.shared.removeFromFavorites(podcast: podcast)
+        }
+        
+        NotificationCenter.default.post(name: .shouldReloadFavorites, object: nil)
     }
 }
 

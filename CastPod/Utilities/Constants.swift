@@ -20,6 +20,8 @@ struct SFSymbols {
     static let pauseButton = UIImage(systemName: "pause.fill")!
     static let information = UIImage(systemName: "info.circle")!
     static let xmark = UIImage(systemName: "xmark")!
+    static let heart = UIImage(systemName: "heart")!
+    static let heartFill = UIImage(systemName: "heart.fill")!
 }
 
 struct Asset {
