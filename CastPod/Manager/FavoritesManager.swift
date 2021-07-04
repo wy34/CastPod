@@ -43,10 +43,10 @@ class FavoritesManager {
         
         if let podcastIndex = existingFavoritePodcasts.firstIndex(where: { $0.trackName == podcast.trackName }) {
             existingFavoritePodcasts.remove(at: podcastIndex)
-        }
-        
-        if let encoded = try? JSONEncoder().encode(existingFavoritePodcasts) {
-            UserDefaults.standard.setValue(encoded, forKey: favoritePodcastsKey)
+            
+            if let encoded = try? JSONEncoder().encode(existingFavoritePodcasts) {
+                UserDefaults.standard.setValue(encoded, forKey: favoritePodcastsKey)
+            }
         }
     }
 }

@@ -147,6 +147,15 @@
 			path = UICollectionViewCells;
 			sourceTree = "<group>";
 		};
+		4CC5195D2691678900F02B90 /* PodcastsSearchController */ = {
+			isa = PBXGroup;
+			children = (
+				4CE3277D268978A60064221C /* PodcastsSearchController.swift */,
+				4C975B84268AC64200ED882D /* EpisodesController.swift */,
+			);
+			path = PodcastsSearchController;
+			sourceTree = "<group>";
+		};
 		4CE3276D268978A50064221C = {
 			isa = PBXGroup;
 			children = (
@@ -206,9 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				4CE3279526897D680064221C /* RootTabBarController.swift */,
-				4CE3277D268978A60064221C /* PodcastsSearchController.swift */,
-				4C975B84268AC64200ED882D /* EpisodesController.swift */,
 				4CC5195426910D5600F02B90 /* FavoritesController.swift */,
+				4CC5195D2691678900F02B90 /* PodcastsSearchController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

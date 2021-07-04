@@ -44,9 +44,6 @@ class FavoriteCell: UICollectionViewCell {
         podcastImageView.layer.cornerRadius = 15
         podcastImageView.clipsToBounds = true
         artistLabel.textColor = .systemGray
-        
-//        titleLabel.backgroundColor = .red
-//        artistLabel.backgroundColor = .blue
     }
     
     private func layoutUI() {

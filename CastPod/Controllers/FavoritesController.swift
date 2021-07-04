@@ -29,6 +29,7 @@ class FavoritesController: UIViewController {
         configureUI()
         layoutUI()
         setupNotificationObservers()
+        setupGestures()
     }
     
     // MARK: - Helpers
@@ -45,10 +46,27 @@ class FavoritesController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadFavorites), name: .shouldReloadFavorites, object: nil)
     }
     
+    private func setupGestures() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(displayRemoveMenu))
+        gesture.minimumPressDuration = 1
+        collectionView.addGestureRecognizer(gesture)
+    }
+    
     // MARK: - Selectors
     @objc func reloadFavorites() {
         favorites = FavoritesManager.shared.fetchFavoritePodcasts()
         collectionView.reloadData()
+    }
+    
+    @objc func displayRemoveMenu(gesture: UILongPressGestureRecognizer) {
+        let gestureLocation = gesture.location(in: collectionView)
+        if let gestureLocationIndexPath = collectionView.indexPathForItem(at: gestureLocation) {
+            showRemoveFavoriteActionSheet(title: "Remove \(favorites[gestureLocationIndexPath.item].trackName ?? "")?") { [weak self] _ in
+                FavoritesManager.shared.removeFromFavorites(podcast: self?.favorites[gestureLocationIndexPath.item])
+                self?.favorites.remove(at: gestureLocationIndexPath.item)
+                self?.collectionView.deleteItems(at: [gestureLocationIndexPath])
+            }
+        }
     }
 }
 
