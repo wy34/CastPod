@@ -30,6 +30,7 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
         configureTableView()
+        setupNotificationObservers()
         checkIfPodcastIsAlreadyFavorited()
     }
     
@@ -46,6 +47,10 @@ class EpisodesController: UITableViewController {
         tableView.rowHeight = 132
     }
     
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateFavoriteIconToUnfavorite), name: .shouldUnfavoritePodcast, object: nil)
+    }
+    
     private func parseEpisodes(feedUrl: String?) {
         APIManager.shared.parsePodcastFeed(urlString: feedUrl) { [weak self] result in
             guard let self = self else { return }
@@ -60,7 +65,9 @@ class EpisodesController: UITableViewController {
                         }
                     }
                 case .failure(let error):
-                    self.showAlert("Error", error.localizedDescription)
+                    self.showAlert("Error", error.localizedDescription, completion: { _ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
             }
         }
     }
@@ -84,6 +91,10 @@ class EpisodesController: UITableViewController {
         }
         
         NotificationCenter.default.post(name: .shouldReloadFavorites, object: nil)
+    }
+    
+    @objc func updateFavoriteIconToUnfavorite() {
+        navigationItem.rightBarButtonItem?.image = SFSymbols.heart
     }
 }
 

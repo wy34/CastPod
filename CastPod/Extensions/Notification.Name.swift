@@ -11,4 +11,5 @@ extension Notification.Name {
     static let shouldDismissPlayerDetailView = Notification.Name("shouldDismissPlayerDetailView")
     static let shouldShowHideEpisodeDescription = Notification.Name("shouldShowHideEpisodeDescription")
     static let shouldReloadFavorites = Notification.Name("shouldReloadFavorites")
+    static let shouldUnfavoritePodcast = Notification.Name("shouldUnfavoritePodcast")
 }

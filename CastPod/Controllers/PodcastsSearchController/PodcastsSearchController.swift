@@ -58,7 +58,7 @@ class PodcastsSearchController: UITableViewController {
                         self?.searchingIndicator.stopAnimating()
                     }
                 case .failure(let error):
-                    self?.showAlert("Error", error.localizedDescription)
+                    self?.showAlert("Error", error.localizedDescription, completion: nil)
             }
         }
     }
