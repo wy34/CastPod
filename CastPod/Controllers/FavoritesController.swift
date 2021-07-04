@@ -34,6 +34,11 @@ class FavoritesController: UIViewController {
         setupGestures()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.tabBarViewControllers[0].tabBarItem.badgeValue = nil
+    }
+    
     // MARK: - Helpers
     private func configureUI() {
         noFavoritesLabel.textAlignment = .center

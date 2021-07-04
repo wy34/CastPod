@@ -85,6 +85,8 @@ class EpisodesController: UITableViewController {
         if currentButtonImage == SFSymbols.heart {
             navigationItem.rightBarButtonItem?.image = SFSymbols.heartFill
             FavoritesManager.shared.saveAsFavorite(podcast: podcast)
+            UIApplication.shared.tabBarViewControllers[0].tabBarItem.badgeValue = "New"
+            UIApplication.shared.tabBarViewControllers[0].tabBarItem.badgeColor = Colors.appTintColor
         } else if currentButtonImage == SFSymbols.heartFill {
             navigationItem.rightBarButtonItem?.image = SFSymbols.heart
             FavoritesManager.shared.removeFromFavorites(podcast: podcast)

@@ -15,4 +15,9 @@ extension UIApplication {
     var rootViewController: RootTabBarController? {
         return keyWindow.rootViewController as? RootTabBarController
     }
+    
+    var tabBarViewControllers: [UIViewController] {
+        guard let viewControllers = rootViewController?.viewControllers else { return [] }
+        return viewControllers
+    }
 }
