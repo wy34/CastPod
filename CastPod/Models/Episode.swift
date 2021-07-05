@@ -8,13 +8,14 @@
 import Foundation
 import FeedKit
 
-struct Episode {
+struct Episode: Codable {
     let title: String?
     var artist: String?
     let description: String?
     let pubDate: Date?
     var imageUrl: String?
     var streamUrl: String?
+    var localUrl: String?
     
     init(feedItem: RSSFeedItem) {
         self.title = feedItem.title

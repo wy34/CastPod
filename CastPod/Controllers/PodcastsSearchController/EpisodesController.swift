@@ -125,4 +125,16 @@ extension EpisodesController {
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return episodes.count == 0 ? 250 : 0
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let downloadAction = UIContextualAction(style: .normal, title: "") { [weak self] action, view, completion in
+            DownloadsManager.shared.downloadEpisode(episode: self?.episodes[indexPath.row])
+            APIManager.shared.download(episode: self?.episodes[indexPath.row])
+            completion(true)
+        }
+        
+        downloadAction.image = SFSymbols.download
+        
+        return UISwipeActionsConfiguration(actions: [downloadAction])
+    }
 }

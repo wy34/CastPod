@@ -8,9 +8,9 @@
 import UIKit
 
 struct SFSymbols {
-    static let star = UIImage(systemName: "star.fill")!
+    static let star = UIImage(systemName: "star")!
     static let magnifyingglass = UIImage(systemName: "magnifyingglass")!
-    static let download = UIImage(systemName: "arrow.down.circle.fill")!
+    static let download = UIImage(systemName: "arrow.down.circle")!
     static let playButton = UIImage(systemName: "play.fill")!
     static let backward15 = UIImage(systemName: "gobackward.15")!
     static let forward15 = UIImage(systemName: "goforward.15")!
@@ -22,6 +22,8 @@ struct SFSymbols {
     static let xmark = UIImage(systemName: "xmark")!
     static let heart = UIImage(systemName: "heart")!
     static let heartFill = UIImage(systemName: "heart.fill")!
+    static let cloud = UIImage(systemName: "icloud.and.arrow.down")!
+    static let trash = UIImage(systemName: "trash")!
 }
 
 struct Asset {

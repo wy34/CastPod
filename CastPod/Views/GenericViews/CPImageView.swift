@@ -15,6 +15,12 @@ class CPImageView: UIImageView {
         self.contentMode = contentMode
     }
     
+    init(image: UIImage?, contentMode: UIImageView.ContentMode, font: UIFont) {
+        super.init(frame: .zero)
+        self.image = image?.applyingSymbolConfiguration(.init(font: font))
+        self.contentMode = contentMode
+    }
+    
     required init?(coder: NSCoder) {
         fatalError()
     }

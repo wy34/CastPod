@@ -21,7 +21,7 @@ class FavoriteCell: UICollectionViewCell {
     }
     
     // MARK: - Views
-    private let podcastImageView = CPImageView(image: Asset.placeholder, contentMode: .scaleAspectFill)
+    private let podcastImageView = CPImageView(image: nil, contentMode: .scaleAspectFill)
     private let titleLabel = CPLabel(text: "Podcast Name", font: .systemFont(ofSize: 18, weight: .bold))
     private let artistLabel = CPLabel(text: "Artist Name", font: .systemFont(ofSize: 16, weight: .regular))
     private lazy var labelStack = CPStackView(views: [titleLabel, artistLabel], axis: .vertical, spacing: -20, distribution: .fillEqually, alignment: .fill)

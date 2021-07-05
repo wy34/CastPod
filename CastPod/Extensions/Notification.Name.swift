@@ -12,4 +12,5 @@ extension Notification.Name {
     static let shouldShowHideEpisodeDescription = Notification.Name("shouldShowHideEpisodeDescription")
     static let shouldReloadFavorites = Notification.Name("shouldReloadFavorites")
     static let shouldUnfavoritePodcast = Notification.Name("shouldUnfavoritePodcast")
+    static let shouldReloadDownloads = Notification.Name("shouldReloadDownloads")
 }

@@ -31,7 +31,7 @@ class RootTabBarController: UITabBarController {
         viewControllers = [
             generateNavController(FavoritesController(), "Favorites", SFSymbols.star),
             generateNavController(PodcastsSearchController(), "Search", SFSymbols.magnifyingglass),
-            generateNavController(PodcastsSearchController(), "Downloads", SFSymbols.download)
+            generateNavController(DownloadsController(), "Downloads", SFSymbols.download)
         ]
     }
     

@@ -18,9 +18,10 @@ class PlayerView: UIView {
             titleLabel.text = "\(episode.title ?? "")               "
             artistLabel.text = episode.artist
             setupAudioSession()
-            playAudioAt(urlString: episode.streamUrl)
+            playAudio(episode: episode)
             miniPlayerView.episode = episode
             setupLockScreenTitleAndArtist()
+            #warning("may want to download episode image data when downloading episode so that if you are offline, you can just load the binary data instead of going to the url to download the image")
             episodeImageView.setImage(with: episode.imageUrl) { image in
                 guard let image = image else { return }
                 let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
@@ -190,9 +191,21 @@ class PlayerView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
     }
     
-    private func playAudioAt(urlString: String?) {
-        guard let url = URL(string: urlString ?? "") else { return }
-        let newPlayerItem = AVPlayerItem(url: url)
+    private func playAudio(episode: Episode) {
+        var audioUrl: URL
+        
+        if episode.localUrl != nil {
+            guard var trueLocationUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            guard let url = URL(string: episode.localUrl ?? "") else { return }
+            let fileName = url.lastPathComponent
+            trueLocationUrl.appendPathComponent(fileName)
+            audioUrl = trueLocationUrl
+        } else {
+            guard let url = URL(string: episode.streamUrl ?? "") else { return }
+            audioUrl = url
+        }
+        
+        let newPlayerItem = AVPlayerItem(url: audioUrl)
         player.replaceCurrentItem(with: newPlayerItem)
         updatePlayPauseButtonTo(play: true)
         volumeSlider.value = player.volume

@@ -62,7 +62,7 @@ class FavoritesController: UIViewController {
     
     private func setupGestures() {
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(displayRemoveMenu))
-        gesture.minimumPressDuration = 1
+        gesture.minimumPressDuration = 0.5
         collectionView.addGestureRecognizer(gesture)
     }
     
@@ -97,6 +97,12 @@ extension FavoritesController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.reuseId, for: indexPath) as! FavoriteCell
         cell.podcast = favorites[indexPath.item]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let episodeController = EpisodesController()
+        episodeController.podcast = favorites[indexPath.item]
+        navigationController?.pushViewController(episodeController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
