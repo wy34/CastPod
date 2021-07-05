@@ -51,12 +51,18 @@ class DownloadsController: UITableViewController {
         
         if let indexOfEpisode = episodes.firstIndex(where: { $0.title == episodeTitle }) {
             let cell = tableView.cellForRow(at: .init(row: indexOfEpisode, section: 0)) as? EpisodeCell
-            if progress == 1 { cell?.hideDownloadingIndicators(); return }
+            cell?.isUserInteractionEnabled = false
+            if progress == 1 {
+                cell?.hideDownloadingIndicators()
+                cell?.isUserInteractionEnabled = true
+                return
+            }
             cell?.showDownloadingIndicatorsWith(progress: progress)
         }
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension DownloadsController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
@@ -69,7 +75,6 @@ extension DownloadsController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(episodes[indexPath.row].localUrl)
         UIApplication.shared.rootViewController?.playerView.episode = nil
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: episodes[indexPath.row], episodeList: episodes)
         tableView.deselectRow(at: indexPath, animated: true)

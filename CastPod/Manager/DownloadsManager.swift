@@ -43,7 +43,17 @@ class DownloadsManager {
         
             if let encoded = try? JSONEncoder().encode(existingDownloads) {
                 UserDefaults.standard.setValue(encoded, forKey: downloadsKey)
+                removeFromDocumentsDirectory(urlString: episode.localUrl)
             }
+        }
+    }
+    
+    func removeFromDocumentsDirectory(urlString: String?) {
+        do {
+            guard let url = URL(string: urlString ?? "") else { return }
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     

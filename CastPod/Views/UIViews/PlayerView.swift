@@ -195,11 +195,8 @@ class PlayerView: UIView {
         var audioUrl: URL
         
         if episode.localUrl != nil {
-            guard var trueLocationUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
             guard let url = URL(string: episode.localUrl ?? "") else { return }
-            let fileName = url.lastPathComponent
-            trueLocationUrl.appendPathComponent(fileName)
-            audioUrl = trueLocationUrl
+            audioUrl = url
         } else {
             guard let url = URL(string: episode.streamUrl ?? "") else { return }
             audioUrl = url

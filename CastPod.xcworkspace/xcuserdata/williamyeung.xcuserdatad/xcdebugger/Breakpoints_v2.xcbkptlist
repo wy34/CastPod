@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CAF58B22-4904-4449-8066-F9D69AA044E6"
+            uuid = "B1ED18D5-9B5C-45E6-9E08-5C284CF551F5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CastPod/Controllers/DownloadsController.swift"
+            filePath = "CastPod/Views/UIViews/PlayerView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "playAudio(episode:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B2D2E0D6-F660-4654-AA64-BC4341C6A62F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CastPod/Views/UIViews/PlayerView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "playAudio(episode:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
