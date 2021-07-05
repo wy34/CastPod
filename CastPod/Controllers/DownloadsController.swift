@@ -36,12 +36,24 @@ class DownloadsController: UITableViewController {
     
     private func setupNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDownloads), name: .shouldReloadDownloads, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displayDownloadProgress), name: .shouldUpdateDownloadProgress, object: nil)
     }
     
     // MARK: - Selectors
     @objc func reloadDownloads() {
         episodes = DownloadsManager.shared.retrieveEpisodes()
         tableView.reloadData()
+    }
+    
+    @objc func displayDownloadProgress(notification: Notification) {
+        guard let episodeTitle = notification.userInfo?["episodeTitle"] as? String else { return }
+        guard let progress = notification.userInfo?["progress"] as? Double else { return }
+        
+        if let indexOfEpisode = episodes.firstIndex(where: { $0.title == episodeTitle }) {
+            let cell = tableView.cellForRow(at: .init(row: indexOfEpisode, section: 0)) as? EpisodeCell
+            if progress == 1 { cell?.hideDownloadingIndicators(); return }
+            cell?.showDownloadingIndicatorsWith(progress: progress)
+        }
     }
 }
 
@@ -57,6 +69,7 @@ extension DownloadsController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(episodes[indexPath.row].localUrl)
         UIApplication.shared.rootViewController?.playerView.episode = nil
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: episodes[indexPath.row], episodeList: episodes)
         tableView.deselectRow(at: indexPath, animated: true)

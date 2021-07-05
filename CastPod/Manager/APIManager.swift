@@ -93,19 +93,20 @@ class APIManager {
         }
     }
     
+    #warning("something is wrong with the local url download")
     func download(episode: Episode?) {
         guard let episode = episode else { return }
         let downloadRequest = DownloadRequest.suggestedDownloadDestination()
         
         AF.download(episode.streamUrl ?? "", to: downloadRequest).downloadProgress { (progress) in
-            
+            let userInfo: [String: Any] = ["episodeTitle": episode.title ?? "", "progress": progress.fractionCompleted]
+            NotificationCenter.default.post(name: .shouldUpdateDownloadProgress, object: nil, userInfo: userInfo)
         }.response { res in
             var existingDownloads = DownloadsManager.shared.retrieveEpisodes()
             
             if let index = existingDownloads.firstIndex(where: { $0.title == episode.title && $0.pubDate == episode.pubDate }) {
                 existingDownloads[index].localUrl = res.fileURL?.absoluteString
                 DownloadsManager.shared.saveEpisodeList(episodes: existingDownloads)
-                NotificationCenter.default.post(name: .shouldReloadDownloads, object: nil)
             }
         }
     }

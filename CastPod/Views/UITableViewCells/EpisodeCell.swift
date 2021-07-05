@@ -28,6 +28,8 @@ class EpisodeCell: UITableViewCell {
     private let descriptionLabel = CPLabel(text: "", font: .systemFont(ofSize: 14, weight: .light))
     private lazy var labelStack = CPStackView(views: [dateLabel, titleLabel, descriptionLabel], axis: .vertical, spacing: 3, distribution: .fill, alignment: .fill)
     
+    private let downloadingIndicatorLabel = CPLabel(text: "100%", font: .systemFont(ofSize: 24, weight: .black))
+    
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,6 +49,9 @@ class EpisodeCell: UITableViewCell {
         dateLabel.textColor = Colors.appTintColor
         titleLabel.numberOfLines = 2
         descriptionLabel.numberOfLines = 2
+        downloadingIndicatorLabel.textColor = .white
+        downloadingIndicatorLabel.textAlignment = .center
+        downloadingIndicatorLabel.isHidden = true
     }
     
     private func layoutUI() {
@@ -56,6 +61,19 @@ class EpisodeCell: UITableViewCell {
         episodeImageView.anchor(leading: leadingAnchor, paddingLeading: 16)
         labelStack.center(to: episodeImageView, by: .centerY)
         labelStack.anchor(trailing: trailingAnchor, leading: episodeImageView.trailingAnchor, paddingTrailing: 16, paddingLeading: 16)
+        
+        episodeImageView.addSubview(downloadingIndicatorLabel)
+        downloadingIndicatorLabel.anchor(top: episodeImageView.topAnchor, trailing: episodeImageView.trailingAnchor, bottom: episodeImageView.bottomAnchor, leading: episodeImageView.leadingAnchor)
+    }
+    
+    func showDownloadingIndicatorsWith(progress: Double) {
+        downloadingIndicatorLabel.text = "\(Int(progress * 100))%"
+        downloadingIndicatorLabel.isHidden = false
+        downloadingIndicatorLabel.backgroundColor = .init(white: 0.15, alpha: 0.75)
+    }
+    
+    func hideDownloadingIndicators() {
+        downloadingIndicatorLabel.isHidden = true
     }
 }
 

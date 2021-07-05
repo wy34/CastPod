@@ -29,6 +29,7 @@ class DownloadsManager {
         
         if let encoded = try? JSONEncoder().encode(existingDownloads) {
             UserDefaults.standard.setValue(encoded, forKey: downloadsKey)
+            NotificationCenter.default.post(name: .shouldReloadDownloads, object: nil)
         }
     }
     
