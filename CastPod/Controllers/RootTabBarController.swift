@@ -14,7 +14,6 @@ class RootTabBarController: UITabBarController {
     var minimizedTopAnchorConstraint: NSLayoutConstraint?
     
     // MARK: - Views
-    let downloadsController = DownloadsController()
     let playerView = PlayerView()
     
     // MARK: - Lifecycle
@@ -22,7 +21,6 @@ class RootTabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarController()
         layoutView()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     // MARK: - Helpers
@@ -31,7 +29,7 @@ class RootTabBarController: UITabBarController {
         viewControllers = [
             generateNavController(FavoritesController(), "Favorites", SFSymbols.star),
             generateNavController(PodcastsSearchController(), "Search", SFSymbols.magnifyingglass),
-            generateNavController(downloadsController, "Downloads", SFSymbols.download)
+            generateNavController(DownloadsController(), "Downloads", SFSymbols.download)
         ]
     }
     

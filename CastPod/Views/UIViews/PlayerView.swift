@@ -28,6 +28,7 @@ class PlayerView: UIView {
     var episodeList = [Episode]()
     
     let player = AVPlayer()
+    let screenHeight = UIScreen.main.bounds.height
     
     // MARK: - Views
     private let miniPlayerView = MiniPlayerView()
@@ -102,10 +103,10 @@ class PlayerView: UIView {
         miniPlayerView.anchor(top: topAnchor, trailing: trailingAnchor, leading: leadingAnchor)
         miniPlayerView.setDimension(height: 64)
         
-        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.85, hMult: 1.85)
+        overallStack.setDimension(width: widthAnchor, height: widthAnchor, wMult: screenHeight <= 736 ? 0.8 : 0.85, hMult: screenHeight <= 736 ? 1.6 : 1.85)
         overallStack.center(x: centerXAnchor, y: centerYAnchor)
         topButtonStack.setDimension(height: widthAnchor, hMult: 0.075)
-        episodeImageView.setDimension(height: widthAnchor, hMult: 0.85)
+        episodeImageView.setDimension(height: widthAnchor, hMult: screenHeight <= 736 ? 0.8 : 0.85)
         timeStack.setDimension(height: heightAnchor, hMult: 0.05)
         artistStack.setDimension(height: widthAnchor, hMult: 0.18)
         volumeStack.setDimension(height: widthAnchor, hMult: 0.1)
