@@ -14,7 +14,7 @@ class EpisodeCell: UITableViewCell {
     var episode: Episode? {
         didSet {
             guard let episode = episode else { return }
-            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
+            setupEpisodeArtwork(episode: episode)
             dateLabel.text = episode.pubDate?.stringWith(format: "MMM dd, yyyy")
             titleLabel.text = episode.title
             descriptionLabel.text = episode.description?.removeHTML()?.removeNewLines()?.removeBackSlashes()
@@ -64,6 +64,14 @@ class EpisodeCell: UITableViewCell {
         
         episodeImageView.addSubview(downloadingIndicatorLabel)
         downloadingIndicatorLabel.anchor(top: episodeImageView.topAnchor, trailing: episodeImageView.trailingAnchor, bottom: episodeImageView.bottomAnchor, leading: episodeImageView.leadingAnchor)
+    }
+    
+    private func setupEpisodeArtwork(episode: Episode) {
+        if episode.downloadedImageData != nil {
+            episodeImageView.image = UIImage(data: episode.downloadedImageData ?? Data())
+        } else {
+            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
+        }
     }
     
     func showDownloadingIndicatorsWith(progress: Double) {

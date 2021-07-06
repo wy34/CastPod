@@ -22,7 +22,7 @@ class MiniPlayerView: UIView {
     var episode: Episode? {
         didSet {
             guard let episode = episode else { return }
-            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
+            setupEpisodeArtwork(episode: episode)
             titleLabel.text = "\(episode.title ?? "")               "
         }
     }
@@ -60,6 +60,14 @@ class MiniPlayerView: UIView {
         episodeImageView.setDimension(width: heightAnchor, height: heightAnchor, wMult: 0.8, hMult: 0.8)
         playPauseButton.setDimension(width: heightAnchor, height: heightAnchor, wMult: 0.4, hMult: 0.4)
         forwardButton.setDimension(width: heightAnchor, height: heightAnchor, wMult: 0.4, hMult: 0.4)
+    }
+    
+    private func setupEpisodeArtwork(episode: Episode) {
+        if episode.downloadedImageData != nil {
+            episodeImageView.image = UIImage(data: episode.downloadedImageData ?? Data())
+        } else {
+            episodeImageView.setImage(with: episode.imageUrl, completion: nil)
+        }
     }
     
     private func setupActions() {

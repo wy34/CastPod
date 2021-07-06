@@ -100,14 +100,21 @@ class APIManager {
         AF.download(episode.streamUrl ?? "", to: downloadRequest).downloadProgress { (progress) in
             let userInfo: [String: Any] = ["episodeTitle": episode.title ?? "", "progress": progress.fractionCompleted]
             NotificationCenter.default.post(name: .shouldUpdateDownloadProgress, object: nil, userInfo: userInfo)
-        }.response { [weak self] res in
+        }.response { res in
             var existingDownloads = DownloadsManager.shared.retrieveEpisodes()
             
             if let index = existingDownloads.firstIndex(where: { $0.title == episode.title && $0.pubDate == episode.pubDate }) {
+                existingDownloads[index].downloadedImageData = self.imageFor(episode: episode)
                 existingDownloads[index].localUrl = res.fileURL?.absoluteString
                 DownloadsManager.shared.saveEpisodeList(episodes: existingDownloads)
                 NotificationCenter.default.post(name: .shouldReloadDownloads, object: nil)
             }
         }
+    }
+    
+    func imageFor(episode: Episode) -> Data {
+        let cacheKey = NSString(string: episode.imageUrl ?? "")
+        let image = imageCache.object(forKey: cacheKey)
+        return image?.pngData() ?? Data()
     }
 }

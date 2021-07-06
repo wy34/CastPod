@@ -21,12 +21,7 @@ class PlayerView: UIView {
             playAudio(episode: episode)
             miniPlayerView.episode = episode
             setupLockScreenTitleAndArtist()
-            #warning("may want to download episode image data when downloading episode so that if you are offline, you can just load the binary data instead of going to the url to download the image")
-            episodeImageView.setImage(with: episode.imageUrl) { image in
-                guard let image = image else { return }
-                let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
-                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
-            }
+            setupEpisodeArtwork(episode: episode)
         }
     }
     
@@ -168,6 +163,21 @@ class PlayerView: UIView {
             episode = currentEpisodeIndex == episodeList.count - 1 ? episodeList[0] : episodeList[currentEpisodeIndex + 1]
         } else {
             episode = currentEpisodeIndex == 0 ? episodeList[episodeList.count - 1] : episodeList[currentEpisodeIndex - 1]
+        }
+    }
+    
+    private func setupEpisodeArtwork(episode: Episode) {
+        if episode.downloadedImageData != nil {
+            guard let image = UIImage(data: episode.downloadedImageData ?? Data()) else { return }
+            episodeImageView.image = image
+            let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
+            MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+        } else {
+            episodeImageView.setImage(with: episode.imageUrl) { image in
+                guard let image = image else { return }
+                let artwork = MPMediaItemArtwork(boundsSize: image.size) { _ in return image }
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+            }
         }
     }
     

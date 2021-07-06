@@ -14,6 +14,7 @@ class RootTabBarController: UITabBarController {
     var minimizedTopAnchorConstraint: NSLayoutConstraint?
     
     // MARK: - Views
+    let downloadsController = DownloadsController()
     let playerView = PlayerView()
     
     // MARK: - Lifecycle
@@ -30,7 +31,7 @@ class RootTabBarController: UITabBarController {
         viewControllers = [
             generateNavController(FavoritesController(), "Favorites", SFSymbols.star),
             generateNavController(PodcastsSearchController(), "Search", SFSymbols.magnifyingglass),
-            generateNavController(DownloadsController(), "Downloads", SFSymbols.download)
+            generateNavController(downloadsController, "Downloads", SFSymbols.download)
         ]
     }
     
