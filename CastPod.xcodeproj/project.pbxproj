@@ -34,7 +34,6 @@
 		4CC5195C26915EF000F02B90 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC5195B26915EF000F02B90 /* FavoritesManager.swift */; };
 		4CC8093526924ACD00E73EBF /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8093426924ACD00E73EBF /* DownloadsController.swift */; };
 		4CC809372692583700E73EBF /* DownloadsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC809362692583700E73EBF /* DownloadsManager.swift */; };
-		4CD9BBA32693A2DE00B17AE3 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD9BBA22693A2DE00B17AE3 /* FileManager.swift */; };
 		4CE3277A268978A60064221C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE32779268978A60064221C /* AppDelegate.swift */; };
 		4CE3277C268978A60064221C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277B268978A60064221C /* SceneDelegate.swift */; };
 		4CE3277E268978A60064221C /* PodcastsSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE3277D268978A60064221C /* PodcastsSearchController.swift */; };
@@ -75,7 +74,6 @@
 		4CC5195B26915EF000F02B90 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		4CC8093426924ACD00E73EBF /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		4CC809362692583700E73EBF /* DownloadsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsManager.swift; sourceTree = "<group>"; };
-		4CD9BBA22693A2DE00B17AE3 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		4CE32776268978A60064221C /* CastPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CE32779268978A60064221C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CE3277B268978A60064221C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 				4C07453D268BA7B4000EFA3B /* UIApplication.swift */,
 				4C334BBB268CD1EF00D85768 /* Notification.Name.swift */,
 				4C334BBF268D6B8A00D85768 /* CMTime.swift */,
-				4CD9BBA22693A2DE00B17AE3 /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -411,7 +408,6 @@
 				4CE3279B268984D10064221C /* Podcast.swift in Sources */,
 				4C975B73268A580900ED882D /* SearchResult.swift in Sources */,
 				4C975B76268A629600ED882D /* APIManager.swift in Sources */,
-				4CD9BBA32693A2DE00B17AE3 /* FileManager.swift in Sources */,
 				4C975B78268A62D800ED882D /* UIViewController.swift in Sources */,
 				4CE3279626897D680064221C /* RootTabBarController.swift in Sources */,
 				4CC8093526924ACD00E73EBF /* DownloadsController.swift in Sources */,

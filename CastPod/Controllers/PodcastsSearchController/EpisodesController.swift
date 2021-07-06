@@ -8,7 +8,7 @@
 import UIKit
 
 
-class EpisodesController: UITableViewController {
+class EpisodesController: UIViewController {
     // MARK: - Properties
     var podcast: Podcast? {
         didSet {
@@ -25,11 +25,22 @@ class EpisodesController: UITableViewController {
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
     private lazy var loadingStack = CPStackView(views: [loadingLabel, loadingIndicator], axis: .vertical, spacing: -165, distribution: .fillEqually)
     
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        tv.delegate = self
+        tv.dataSource = self
+        tv.register(EpisodeCell.self, forCellReuseIdentifier: EpisodeCell.reuseId)
+        tv.backgroundColor = Colors.darkModeBackground
+        tv.tableFooterView = UIView()
+        tv.rowHeight = 132
+        return tv
+    }()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadingIndicator.startAnimating()
-        configureTableView()
+        layoutUI()
         setupNotificationObservers()
         checkIfPodcastIsAlreadyFavorited()
     }
@@ -40,11 +51,9 @@ class EpisodesController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: SFSymbols.heart, style: .plain, target: self, action: #selector(favoritePodcast))
     }
     
-    private func configureTableView() {
-        tableView.register(EpisodeCell.self, forCellReuseIdentifier: EpisodeCell.reuseId)
-        tableView.backgroundColor = Colors.darkModeBackground
-        tableView.tableFooterView = UIView()
-        tableView.rowHeight = 132
+    private func layoutUI() {
+        view.addSubview(tableView)
+        tableView.anchor(top: view.topAnchor, trailing: view.trailingAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor)
     }
     
     private func setupNotificationObservers() {
@@ -101,32 +110,32 @@ class EpisodesController: UITableViewController {
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
-extension EpisodesController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.reuseId, for: indexPath) as! EpisodeCell
         cell.episode = episodes[indexPath.row]
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIApplication.shared.rootViewController?.playerView.episode = nil
         UIApplication.shared.rootViewController?.maximizePlayerView(episode: episodes[indexPath.row], episodeList: episodes)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return loadingStack
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return episodes.count == 0 ? 250 : 0
     }
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let downloadAction = UIContextualAction(style: .normal, title: "") { [weak self] action, view, completion in
             DownloadsManager.shared.downloadEpisode(episode: self?.episodes[indexPath.row])
             APIManager.shared.download(episode: self?.episodes[indexPath.row])

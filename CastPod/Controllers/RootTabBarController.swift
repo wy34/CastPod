@@ -21,8 +21,6 @@ class RootTabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarController()
         layoutView()
-        
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     // MARK: - Helpers
@@ -74,6 +72,11 @@ class RootTabBarController: UITabBarController {
     
     func minimizePlayerView() {
         animatePlayerViewConstraintsTo(show: false)
+        
+        UITableView.appearance().scrollIndicatorInsets = .init(top: 0, left: 0, bottom: 64, right: 0)
+        UITableView.appearance().contentInset = .init(top: 0, left: 0, bottom: 64, right: 0)
+        UICollectionView.appearance().scrollIndicatorInsets = .init(top: 0, left: 0, bottom: 64, right: 0)
+        UICollectionView.appearance().contentInset = .init(top: 0, left: 0, bottom: 64, right: 0)
     }
     
     func maximizePlayerView(episode: Episode?, episodeList: [Episode] = []) {
