@@ -104,18 +104,10 @@ class APIManager {
             var existingDownloads = DownloadsManager.shared.retrieveEpisodes()
             
             if let index = existingDownloads.firstIndex(where: { $0.title == episode.title && $0.pubDate == episode.pubDate }) {
-                existingDownloads[index].localUrl = self?.convertToTrueLocationPath(falseLocationPath: res.fileURL?.absoluteString)
+                existingDownloads[index].localUrl = res.fileURL?.absoluteString
                 DownloadsManager.shared.saveEpisodeList(episodes: existingDownloads)
                 NotificationCenter.default.post(name: .shouldReloadDownloads, object: nil)
             }
         }
-    }
-    
-    private func convertToTrueLocationPath(falseLocationPath: String?) -> String {
-        guard let falseLocationPath = falseLocationPath else { return "" }
-        guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return "" }
-        guard let falseUrl = URL(string: falseLocationPath) else { return "" }
-        trueLocation.appendPathComponent(falseUrl.lastPathComponent)
-        return trueLocation.absoluteString
     }
 }

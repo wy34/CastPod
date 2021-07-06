@@ -50,7 +50,7 @@ class DownloadsManager {
     
     func removeFromDocumentsDirectory(urlString: String?) {
         do {
-            guard let url = URL(string: urlString ?? "") else { return }
+            guard let url = URL(string: urlString?.convertToTrueLocationPath() ?? "") else { return }
             try FileManager.default.removeItem(atPath: url.path)
         } catch {
             print(error.localizedDescription)

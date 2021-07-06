@@ -25,4 +25,11 @@ extension String {
     func removeBackSlashes() -> String? {
         return self.replacingOccurrences(of: "\\", with: "")
     }
+    
+    func convertToTrueLocationPath() -> String {
+        guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return "" }
+        guard let falseUrl = URL(string: self) else { return "" }
+        trueLocation.appendPathComponent(falseUrl.lastPathComponent)
+        return trueLocation.absoluteString
+    }
 }

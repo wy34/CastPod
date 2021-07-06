@@ -195,7 +195,7 @@ class PlayerView: UIView {
         var audioUrl: URL
         
         if episode.localUrl != nil {
-            guard let url = URL(string: episode.localUrl ?? "") else { return }
+            guard let url = URL(string: episode.localUrl?.convertToTrueLocationPath() ?? "") else { return }
             audioUrl = url
         } else {
             guard let url = URL(string: episode.streamUrl ?? "") else { return }

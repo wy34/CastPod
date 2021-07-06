@@ -79,4 +79,14 @@ extension EpisodeDescriptionCardView: UITableViewDelegate, UITableViewDataSource
         cell.textLabel?.font = .systemFont(ofSize: 20, weight: .medium)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = CPLabel(text: "No Description", font: .systemFont(ofSize: 18, weight: .bold))
+        label.textAlignment = .center
+        return label
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return episode?.description == nil || episode?.description == "" ? 150 : 0
+    }
 }
