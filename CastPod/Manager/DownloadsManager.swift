@@ -53,7 +53,7 @@ class DownloadsManager {
             guard let url = URL(string: urlString?.convertToTrueLocationPath() ?? "") else { return }
             try FileManager.default.removeItem(atPath: url.path)
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
         }
     }
     
