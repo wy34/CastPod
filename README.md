@@ -18,6 +18,8 @@
 * UIKit
 * Cocoapods (AlamoFire, FeedKit, MarqueeLabel)
 * AVKit
+* NotificationCenter
+* Animations
 
 # What I Learned:
 
