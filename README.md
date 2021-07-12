@@ -24,6 +24,7 @@
 # What I Learned:
 
 * Playing audio files with AVPlayer
+* Parsing RSS Feeds
 * UIPanGestures
 * Handling Audio Interruptions such as incoming phone calls
 * Singleton design pattern with Network managers
@@ -31,4 +32,4 @@
 # How to use
 
 * Clone the project and run it on Xcode 12 or above
-* Will be available on the Apple Appstore soon
+* Available on the Apple Appstore
