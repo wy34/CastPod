@@ -32,4 +32,4 @@
 # How to use
 
 * Clone the project and run it on Xcode 12 or above
-* Available on the Apple Appstore
+* Available on the Apple Appstore -> https://apps.apple.com/us/app/castpod-podcast-streaming/id1575424768
